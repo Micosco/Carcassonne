@@ -1,6 +1,7 @@
 package com.mcsc.carcassonne.ui;
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 
 public class MainFrame extends JFrame {
@@ -10,11 +11,11 @@ public class MainFrame extends JFrame {
     private CardLayout contentPanelLayout;
 
     public MainFrame() {
-        Dimension halfScreenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        halfScreenSize.setSize(halfScreenSize.width / 2, halfScreenSize.height / 2);
-        setSize(halfScreenSize);
+        setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+        setResizable(false);    //
         setLocationByPlatform(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
 
         contentPanelLayout = new CardLayout();
         setContentPane(new JPanel());

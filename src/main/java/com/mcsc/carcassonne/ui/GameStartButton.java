@@ -9,14 +9,7 @@ public class GameStartButton extends JButton {
     public GameStartButton() {
         super("开始游戏");
         setSize(160, 80);
-        constraints = new GridBagConstraints();
-        constraints.gridx = 7;
-        constraints.gridy = 5;
-        constraints.gridwidth = 2;
-        constraints.gridheight = 1;
-        constraints.weightx = 100;
-        constraints.weighty = 100;
-        constraints.fill = GridBagConstraints.NONE;
+        setPreferredSize(new Dimension(160, 80));
     }
 
     public GridBagConstraints getConstraints() {
