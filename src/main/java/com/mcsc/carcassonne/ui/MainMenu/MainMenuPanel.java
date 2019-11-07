@@ -1,5 +1,6 @@
-package com.mcsc.carcassonne.ui;
+package com.mcsc.carcassonne.ui.MainMenu;
 
+import com.mcsc.carcassonne.ui.AbstractGamePanel;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
@@ -57,10 +58,3 @@ public class MainMenuPanel extends AbstractGamePanel {
     }
 }
 
-class StartMenuTextFiled extends JTextField {
-    public StartMenuTextFiled() {
-        setPreferredSize(new Dimension(480, 240));
-        setText("Game Introduce");
-        setEditable(false);
-    }
-}

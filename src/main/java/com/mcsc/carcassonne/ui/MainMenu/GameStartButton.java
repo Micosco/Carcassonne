@@ -1,4 +1,4 @@
-package com.mcsc.carcassonne.ui;
+package com.mcsc.carcassonne.ui.MainMenu;
 
 import javax.swing.*;
 import java.awt.*;

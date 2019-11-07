@@ -1,7 +1,8 @@
 package com.mcsc.carcassonne.ui;
 
+import com.mcsc.carcassonne.ui.MainMenu.MainMenuPanel;
+
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
 import java.awt.*;
 
 public class MainFrame extends JFrame {
