@@ -12,7 +12,7 @@ public class Carcassonne {
             e.printStackTrace();
         }
 
-        JFrame window = new MainFrame();
+        JFrame window = MainFrame.getMainWindow();
         window.setVisible(true);
     }
 }

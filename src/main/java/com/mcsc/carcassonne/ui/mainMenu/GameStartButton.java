@@ -1,18 +1,16 @@
-package com.mcsc.carcassonne.ui.MainMenu;
+package com.mcsc.carcassonne.ui.mainMenu;
+
+import com.mcsc.carcassonne.event.mainMenu.GameStartListener;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class GameStartButton extends JButton {
-    private GridBagConstraints constraints;
 
     public GameStartButton() {
         super("开始游戏");
         setSize(160, 80);
         setPreferredSize(new Dimension(160, 80));
-    }
-
-    public GridBagConstraints getConstraints() {
-        return constraints;
+        addActionListener(new GameStartListener());
     }
 }
