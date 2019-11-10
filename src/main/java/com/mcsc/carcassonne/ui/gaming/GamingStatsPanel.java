@@ -1,5 +1,7 @@
 package com.mcsc.carcassonne.ui.gaming;
 
+import net.miginfocom.swing.MigLayout;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -13,5 +15,7 @@ import java.awt.*;
 public class GamingStatsPanel extends JPanel {
     public GamingStatsPanel() {
         setPreferredSize(new Dimension(240, 720));
+        setLayout(new MigLayout("wrap 3"));
+        add(new ReturnButton(), "cell 0 8 3 1");
     }
 }
