@@ -1,5 +1,9 @@
 package com.mcsc.carcassonne.board;
 
+/**
+ * 游玩区中用于放置板块的一个方格
+ */
+
 public class BoardPosition {
     private int x, y;
     private Tile tile;
