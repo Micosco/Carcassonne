@@ -1,7 +1,7 @@
 package com.mcsc.carcassonne.ui;
 
 import com.mcsc.carcassonne.ui.gaming.GamingPanel;
-import com.mcsc.carcassonne.ui.mainMenu.MainMenuPanel;
+import com.mcsc.carcassonne.ui.menu.MainMenuPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,7 +22,7 @@ public class MainFrame extends JFrame {
         panels = new HashSet<>();
 
         setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-        setResizable(false);    //
+        setResizable(false);
         setLocationByPlatform(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -43,8 +43,9 @@ public class MainFrame extends JFrame {
     }
 
     public void switchPanel(String panelName) {
-        if (!panels.contains(panelName))
+        if (!panels.contains(panelName)) {
             System.out.println("Panel don't exist");
+        }
         contentPanelLayout.show(getContentPane(), panelName);
     }
 }

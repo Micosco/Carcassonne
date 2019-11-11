@@ -8,7 +8,9 @@ public class RoundStagePointer {
     private RoundStagePointer(){}
 
     public static RoundStagePointer getDefaultStagePointer() {
-        if (sharedPointer != null) return sharedPointer;
+        if (sharedPointer != null) {
+            return sharedPointer;
+        }
         sharedPointer = new RoundStagePointer();
         sharedPointer.roundStages = RoundStage.getDefaultRoundStages();
         sharedPointer.currentStage = sharedPointer.roundStages[0];

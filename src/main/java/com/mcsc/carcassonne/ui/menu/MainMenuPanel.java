@@ -1,4 +1,4 @@
-package com.mcsc.carcassonne.ui.mainMenu;
+package com.mcsc.carcassonne.ui.menu;
 
 import net.miginfocom.swing.MigLayout;
 

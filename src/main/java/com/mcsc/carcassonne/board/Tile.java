@@ -25,7 +25,7 @@ public class Tile {
      * @return number of players' meeple at the specified region
      */
     public Map<Player, Integer> getMeepleCount() {
-        Map<Player, Integer> meepleCount = new HashMap<>();
+        Map<Player, Integer> meepleCount = new HashMap<>(6);
 
         return meepleCount;
     }

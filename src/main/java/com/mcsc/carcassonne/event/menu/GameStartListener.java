@@ -1,4 +1,4 @@
-package com.mcsc.carcassonne.event.mainMenu;
+package com.mcsc.carcassonne.event.menu;
 
 import com.mcsc.carcassonne.ui.MainFrame;
 
