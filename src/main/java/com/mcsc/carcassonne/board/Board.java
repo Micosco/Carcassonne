@@ -5,14 +5,26 @@ import com.mcsc.carcassonne.game.Player;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 用于进行游戏的棋盘
+ * 保存游戏主要数据
+ *
+ * @author WhiteWing
+ */
 public class Board {
     private BoardPosition[][] board;
     private int boardSize;
     private int tileCount;
     private Tile lastPlaced;
 
+    public static final int DEFAULT_SIZE = 201;
+
     public Board() {
-        boardSize = 201;
+        this(DEFAULT_SIZE);
+    }
+
+    public Board(int boardSize) {
+        this.boardSize = boardSize;
         board = new BoardPosition[boardSize][boardSize];
         tileCount = 0;
 
@@ -25,7 +37,7 @@ public class Board {
     }
 
     /**
-     * place a tile at specified place
+     * 在指定位置放置米宝
      *
      * @param x    Abscissa of specified place
      * @param y    Ordinate of specified place

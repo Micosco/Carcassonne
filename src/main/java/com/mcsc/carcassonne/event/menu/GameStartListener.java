@@ -9,6 +9,6 @@ public class GameStartListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        MainFrame.getMainWindow().switchPanel("Gaming");
+        MainFrame.getMainWindow().switchPanel("Players");
     }
 }
