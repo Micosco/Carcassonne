@@ -1,6 +1,6 @@
 package com.mcsc.carcassonne.ui.menu;
 
-import com.mcsc.carcassonne.event.ui.menu.GameStartListener;
+import com.mcsc.carcassonne.event.ui.menu.NewGameListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,12 +8,12 @@ import java.awt.*;
 /**
  * @author WhiteWing
  */
-public class GameStartButton extends JButton {
+public class NewGameButton extends JButton {
 
-    public GameStartButton() {
+    public NewGameButton() {
         super("新建游戏");
         setSize(160, 80);
         setPreferredSize(new Dimension(160, 80));
-        addActionListener(new GameStartListener());
+        addActionListener(new NewGameListener());
     }
 }

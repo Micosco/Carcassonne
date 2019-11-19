@@ -1,5 +1,6 @@
 package com.mcsc.carcassonne.ui.gaming;
 
+import com.mcsc.carcassonne.game.GameState;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
@@ -16,6 +17,9 @@ public class GamingStatsPanel extends JPanel {
     public GamingStatsPanel() {
         setPreferredSize(new Dimension(240, 720));
         setLayout(new MigLayout("wrap 3"));
+        for (var player : GameState.getCurrentGameState().getPlayersList()) {
+            add(new PlayerInfo(player), "span 3 1");
+        }
         add(new ReturnButton(), "cell 0 8 3 1");
     }
 }

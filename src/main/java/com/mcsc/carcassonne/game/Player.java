@@ -1,12 +1,18 @@
 package com.mcsc.carcassonne.game;
 
 
+import java.awt.*;
 import java.util.Objects;
 
 public class Player {
     private String id;
     private int score;
+    private Color color;
 
+    public Player(String id, Color color) {
+        this.id = id;
+        this.color = color;
+    }
 
     public String getId() {
         return id;
@@ -14,6 +20,10 @@ public class Player {
 
     public int getScore() {
         return score;
+    }
+
+    public Color getColor() {
+        return color;
     }
 
     @Override

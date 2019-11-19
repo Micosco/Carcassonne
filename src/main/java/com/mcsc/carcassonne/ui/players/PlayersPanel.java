@@ -2,6 +2,7 @@ package com.mcsc.carcassonne.ui.players;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * 玩家管理界面
@@ -9,10 +10,31 @@ import java.awt.*;
  */
 public class PlayersPanel extends JPanel {
     public static PlayersPanel panel = new PlayersPanel();
+    private ArrayList<PlayerInfo> players;
 
     private PlayersPanel() {
         setPreferredSize(new Dimension(1280, 720));
-        add(new PlayerInfo());
+        //使PlayerInfo竖直排列
+        ((FlowLayout) getLayout()).setHgap(1000);
+
+        players = new ArrayList<>();
+        for (int i = 0; i < PlayerColor.getMaxPlayerNum(); i++) {
+            players.add(new PlayerInfo());
+        }
+        for (var player : players) {
+            add(player);
+        }
+        add(new GameStartButton());
+    }
+
+    public ArrayList<PlayerInfo> getPlayersInfo() {
+        ArrayList<PlayerInfo> enabledPlayers = new ArrayList<>();
+        for (var player : players) {
+            if (player.isEnable()) {
+                enabledPlayers.add(player);
+            }
+        }
+        return enabledPlayers;
     }
 
     public static PlayersPanel getPanel() {

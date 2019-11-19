@@ -14,7 +14,7 @@ public class MainMenuPanel extends JPanel {
 
         addPlaceHolders();
         add(new StartMenuTextFiled(), "cell 5 2 6 3");
-        add(new GameStartButton(), "cell 7 5 2 1 ");
+        add(new NewGameButton(), "cell 7 5 2 1 ");
         add(new OptionsButton(), "cell 7 6 2 1");
     }
 
