@@ -34,7 +34,7 @@ public class MainFrame extends JFrame {
 
         getContentPane().add("MainMenu", MainMenuPanel.getPanel());
         panels.add("MainMenu");
-        getContentPane().add("Gaming", GamingPanel.getNewPanel());
+        getContentPane().add("Gaming", GamingPanel.getPanel());
         panels.add("Gaming");
         getContentPane().add("Players", PlayersPanel.getPanel());
         panels.add("Players");

@@ -11,6 +11,6 @@ public class PlayerInfo extends JPanel {
         setPreferredSize(new Dimension(600,80));
         setLayout(new FlowLayout());
         add(new PlayerColor());
-        add(new JTextField(20));
+        add(new PlayerID());
     }
 }

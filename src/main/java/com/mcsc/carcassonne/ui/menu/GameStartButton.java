@@ -1,6 +1,6 @@
 package com.mcsc.carcassonne.ui.menu;
 
-import com.mcsc.carcassonne.event.menu.GameStartListener;
+import com.mcsc.carcassonne.event.ui.menu.GameStartListener;
 
 import javax.swing.*;
 import java.awt.*;

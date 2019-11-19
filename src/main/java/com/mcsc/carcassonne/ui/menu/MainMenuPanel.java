@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainMenuPanel extends JPanel {
-    private static MainMenuPanel mainMenuPanel;
+    private static MainMenuPanel panel = new MainMenuPanel();
 
     private MainMenuPanel() {
         MigLayout layout = new MigLayout("wrap 16");
@@ -41,10 +41,7 @@ public class MainMenuPanel extends JPanel {
     }
 
     public static MainMenuPanel getPanel() {
-        if (mainMenuPanel == null) {
-            mainMenuPanel = new MainMenuPanel();
-        }
-        return mainMenuPanel;
+        return panel;
     }
 
     private String getColumnSize() {

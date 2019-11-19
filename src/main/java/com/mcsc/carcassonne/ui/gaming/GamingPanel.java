@@ -9,7 +9,7 @@ import java.awt.*;
  * 显示板块的面板
  */
 public class GamingPanel extends JPanel {
-    private static GamingPanel gamingPanel = new GamingPanel();
+    private static GamingPanel panel = new GamingPanel();
 
     private GamingPanel() {
         setLayout(new MigLayout("wrap 16"));
@@ -19,12 +19,7 @@ public class GamingPanel extends JPanel {
         add(new BoardPanel(), "span 13 9");
     }
 
-    public static GamingPanel getNewPanel() {
-        if (gamingPanel == null) {
-            gamingPanel = new GamingPanel();
-        } else {
-
-        }
-        return gamingPanel;
+    public static GamingPanel getPanel() {
+        return panel;
     }
 }
