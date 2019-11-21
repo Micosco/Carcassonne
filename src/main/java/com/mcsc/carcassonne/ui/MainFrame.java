@@ -14,8 +14,9 @@ import java.util.Set;
  */
 public class MainFrame extends JFrame {
     public static final int WINDOW_WIDTH = 1280;
-    public static final int WINDOW_HEIGHT = 720;
-    public static MainFrame mainWindow = new MainFrame();
+    //窗口宽度+标题栏宽度
+    public static final int WINDOW_HEIGHT = 720 + 32;
+    private static MainFrame mainWindow = new MainFrame();
     private CardLayout contentPanelLayout;
     private Set<String> panels;
 

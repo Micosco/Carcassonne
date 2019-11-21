@@ -14,26 +14,29 @@ public class GamingPanel extends JPanel {
     private static GamingPanel panel = new GamingPanel();
     private GamingStatsPanel gamingStatePanel;
     private BoardPanel boardPanel;
+    private ReturnButton returnButton;
 
     private GamingPanel() {
         setLayout(new MigLayout("wrap 16"));
         setBackground(Color.LIGHT_GRAY);
         gamingStatePanel = new GamingStatsPanel();
-        add(gamingStatePanel, "span 3 9");
         boardPanel = new BoardPanel();
-        add(boardPanel, "span 13 9");
+        returnButton = new ReturnButton();
     }
 
     /**
-     * 每次新建游戏时调用，更新{@code GameStatePanel}和{@code BoardPanel}
+     * 每次新建游戏时调用，更新{@code GameStatePanel}，{@code BoardPanel}和{@code ReturnButton}
      */
     public void initial() {
         remove(gamingStatePanel);
-        gamingStatePanel = new GamingStatsPanel();
-        add(gamingStatePanel, "span 3 9");
         remove(boardPanel);
+        remove(returnButton);
+        gamingStatePanel = new GamingStatsPanel();
         boardPanel = new BoardPanel();
-        add(boardPanel, "span 13 9");
+        returnButton = new ReturnButton();
+        add(gamingStatePanel, "cell 0 0 3 8");
+        add(boardPanel, "cell 3 0 13 9");
+        add(returnButton, "cell 0 8 3 1");
     }
 
     public static GamingPanel getPanel() {

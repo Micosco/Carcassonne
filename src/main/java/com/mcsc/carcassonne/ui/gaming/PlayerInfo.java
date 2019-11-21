@@ -19,7 +19,7 @@ public class PlayerInfo extends JLabel {
         this.player = player;
         setHorizontalAlignment(SwingConstants.LEFT);
         setText(player.getId() + " ".repeat(5));
-        setFont(new Font("微软雅黑", Font.BOLD, 15));
+        setFont(new Font("Consolas", Font.BOLD, 20));
         setForeground(player.getColor());
     }
 
