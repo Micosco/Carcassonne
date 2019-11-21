@@ -1,4 +1,4 @@
-package com.mcsc.carcassonne.ui.mainMenu;
+package com.mcsc.carcassonne.ui.menu;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainMenuPanel extends JPanel {
-    private static MainMenuPanel mainMenuPanel;
+    private static MainMenuPanel panel = new MainMenuPanel();
 
     private MainMenuPanel() {
         MigLayout layout = new MigLayout("wrap 16");
@@ -14,7 +14,7 @@ public class MainMenuPanel extends JPanel {
 
         addPlaceHolders();
         add(new StartMenuTextFiled(), "cell 5 2 6 3");
-        add(new GameStartButton(), "cell 7 5 2 1 ");
+        add(new NewGameButton(), "cell 7 5 2 1 ");
         add(new OptionsButton(), "cell 7 6 2 1");
     }
 
@@ -41,10 +41,7 @@ public class MainMenuPanel extends JPanel {
     }
 
     public static MainMenuPanel getPanel() {
-        if (mainMenuPanel == null) {
-            mainMenuPanel = new MainMenuPanel();
-        }
-        return mainMenuPanel;
+        return panel;
     }
 
     private String getColumnSize() {

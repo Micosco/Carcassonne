@@ -8,7 +8,7 @@ public class BoardPosition {
     private int x, y;
     private Tile tile;
 
-    public static final BoardPosition originPosition = new BoardPosition(0,0);
+    public static final BoardPosition ORIGIN_POSITION = new BoardPosition(0,0);
 
     public BoardPosition(int x, int y) {
         this.x = x;
@@ -20,6 +20,8 @@ public class BoardPosition {
     }
 
     public void placeTile(Tile tile) {
-        if (isEmpty()) this.tile = tile;
+        if (isEmpty()) {
+            this.tile = tile;
+        }
     }
 }

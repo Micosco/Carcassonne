@@ -45,7 +45,9 @@ public class AdjacencyMatrix {
     public Set<Integer> getRow(int row) {
         Set<Integer> result = new HashSet<Integer>();
         for (int i = 0; i < column; i++) {
-            if (matrix[row][i]) result.add(i);
+            if (matrix[row][i]) {
+                result.add(i);
+            }
         }
         return result;
     }
@@ -53,7 +55,9 @@ public class AdjacencyMatrix {
     public Set<Integer> getColumn(int column) {
         Set<Integer> result = new HashSet<Integer>();
         for (int i = 0; i < row; i++) {
-            if (matrix[i][row]) result.add(i);
+            if (matrix[i][row]) {
+                result.add(i);
+            }
         }
         return result;
     }
