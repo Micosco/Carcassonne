@@ -2,16 +2,19 @@ package com.mcsc.carcassonne.game;
 
 
 import java.awt.*;
+import java.util.Map;
 import java.util.Objects;
 
 public class Player {
     private String id;
     private int score;
     private Color color;
+    private int meepleCount;
 
     public Player(String id, Color color) {
         this.id = id;
         this.color = color;
+        meepleCount = 8;
     }
 
     public String getId() {
@@ -41,6 +44,18 @@ public class Player {
             return false;
         }
         return Objects.equals(id, player.id);
+    }
+
+    public int getMeepleCount() {
+        return meepleCount;
+    }
+
+    public void placeMeeple() {
+        meepleCount--;
+    }
+
+    public void retrieveMeeple() {
+        meepleCount++;
     }
 
     @Override

@@ -18,17 +18,33 @@ public class Tile {
     private int rotation;
     private String expansion;
     private int identifier;
-    ArrayList<Meeple> meeples;
-
-    /** get the number of players' meeple at the specified region
-     *
-     * @return number of players' meeple at the specified region
+    /**
+     * 保存各个位置放置的米宝，null表示未放置
      */
-    public Map<Player, Integer> getMeepleCount() {
-        Map<Player, Integer> meepleCount = new HashMap<>(6);
+    private Map<EdgeDirectionEnum, Meeple> meeples;
 
-        return meepleCount;
+    public Tile() {
+        meeples = new HashMap<>(9);
+        for(var direction: EdgeDirectionEnum.values()) {
+            meeples.put(direction, null);
+        }
     }
+
+    /**
+     * 返回与指定边缘所在区域相连的板块
+     * @param edge 指定边缘
+     * @return 连通的板块
+     */
+    public Tile[] getAdjacencyTile(EdgeDirectionEnum edge) {
+
+        return null;
+    }
+
+    public Map<EdgeDirectionEnum, Meeple> getMeepleCount() {
+        return meeples;
+    }
+
+
 }
 
 

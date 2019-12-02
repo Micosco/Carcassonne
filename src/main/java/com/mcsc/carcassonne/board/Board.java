@@ -38,7 +38,9 @@ public class Board {
     }
 
     /**
-     * 在指定位置放置米宝
+     * 在指定位置放置板块
+     * 将{@code Tile}对象保存至{@code board}
+     * 使{@code lastPlaced} 指向最后放置的板块, {@code tileCount} + 1
      *
      * @param x    指定位置的横坐标
      * @param y    指定位置的纵坐标
@@ -63,20 +65,25 @@ public class Board {
     }
 
     /**
-     * 在指定区域放置米宝
+     * 在板块指定区域(以区域的一个板块边缘表示)放置米宝
+     *
+     * 调用该方法时需同时调用{@code game.Player.placeMeeple()} 以确保玩家米宝计数正确
      *
      * @param region 要放置米宝的区域
      */
     public void placeMeeple(EdgeDirectionEnum region) {
+
     }
 
     /**
-     * 当放置最后一个板块后，结算分数
+     * 放置一个板块后，结算分数并调用{@code game.Player.retrieveMeeple()}更新玩家米宝计数
+     * 放置最后一个板块时，需要结算田野，未完成城镇、道路、修道院分数
      *
      * @return 每位玩家的分数
      */
     public Map<Player, Integer> settleScore() {
         Map<Player, Integer> scores = new HashMap<Player, Integer>(0);
+
         return scores;
     }
 }
