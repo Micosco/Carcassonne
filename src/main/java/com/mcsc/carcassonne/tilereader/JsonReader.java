@@ -1,4 +1,4 @@
-package com.mcsc.carcassonne.CardReader;
+package com.mcsc.carcassonne.tilereader;
 
 import com.mcsc.carcassonne.utility.AdjacencyMatrix;
 import org.json.*;
@@ -14,6 +14,7 @@ import java.util.List;
  * @since 12
  * {@code JsonReader}Json文件读取类
  * 用于从板块的配置文件中读取各个板块的信息。
+ * 每个板块是一个对象，存入牌堆
  */
 public class JsonReader {
     /**
