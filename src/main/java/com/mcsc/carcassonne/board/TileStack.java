@@ -16,4 +16,11 @@ public class TileStack {
     public Tile draw() {
         return tileStack.pop();
     }
+
+    private void shuffle() {
+        //TODO
+    }
+    public TileStack() {
+
+    }
 }
