@@ -1,6 +1,7 @@
 package com.mcsc.carcassonne.ui;
 
 import com.mcsc.carcassonne.ui.gaming.GamingPanel;
+import com.mcsc.carcassonne.ui.menu.MainMenu;
 import com.mcsc.carcassonne.ui.menu.MainMenuPanel;
 import com.mcsc.carcassonne.ui.players.PlayersPanel;
 
@@ -33,7 +34,7 @@ public class MainFrame extends JFrame {
         JPanel contentPanel = (JPanel) getContentPane();
         contentPanel.setLayout(contentPanelLayout);
 
-        getContentPane().add("MainMenu", MainMenuPanel.getPanel());
+        getContentPane().add("MainMenu", new MainMenu());
         panels.add("MainMenu");
         getContentPane().add("Gaming", GamingPanel.getPanel());
         panels.add("Gaming");
