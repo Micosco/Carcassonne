@@ -6,4 +6,8 @@ public class Edge {
     public Edge(EdgeTypeEnum edgeType) {
         this.edgeType = edgeType;
     }
+
+    public EdgeTypeEnum getEdgeType() {
+        return edgeType;
+    }
 }

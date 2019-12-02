@@ -7,5 +7,13 @@ import java.util.Stack;
  */
 
 public class TileStack {
-    Stack<Tile> tileStack;
+    private Stack<Tile> tileStack;
+
+    public boolean isEmpty() {
+        return tileStack.empty();
+    }
+
+    public Tile draw() {
+        return tileStack.pop();
+    }
 }

@@ -29,6 +29,7 @@ public class Board {
         tileCount = 0;
 
         int halfOfBoardSize = boardSize / 2;
+        //在board上每个设置放置一个不包含板块的BoardPosition对象
         for (int i = 0, x = -halfOfBoardSize; i <= boardSize; i++, x++) {
             for (int j = 0, y = -halfOfBoardSize; j <= boardSize; j++, y++) {
                 board[i][j] = new BoardPosition(x, y);
@@ -39,12 +40,13 @@ public class Board {
     /**
      * 在指定位置放置米宝
      *
-     * @param x    Abscissa of specified place
-     * @param y    Ordinate of specified place
-     * @param tile the tile to place
+     * @param x    指定位置的横坐标
+     * @param y    指定位置的纵坐标
+     * @param tile 要放置的板块
      */
     public void placeTile(int x, int y, Tile tile) {
-        // TODO 补全方法体
+        board[x][y].placeTile(tile);
+        // TODO 补全方法体：结算分数
 
         lastPlaced = tile;
     }
@@ -61,18 +63,17 @@ public class Board {
     }
 
     /**
-     * place meeple at specified region
-     * this method will return
+     * 在指定区域放置米宝
      *
-     * @param region the region to place meeple
+     * @param region 要放置米宝的区域
      */
     public void placeMeeple(EdgeDirectionEnum region) {
     }
 
     /**
-     * start to settle score at last placed tile
+     * 当放置最后一个板块后，结算分数
      *
-     * @return each player scores
+     * @return 每位玩家的分数
      */
     public Map<Player, Integer> settleScore() {
         Map<Player, Integer> scores = new HashMap<Player, Integer>(0);
