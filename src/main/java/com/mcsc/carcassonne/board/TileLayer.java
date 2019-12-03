@@ -12,7 +12,7 @@ import com.mcsc.carcassonne.utility.AdjacencyMatrix;
  */
 
 public class TileLayer {
-    private Edge[] edges = new Edge[8];
+    private EdgeTypeEnum[] edges;
     private AdjacencyMatrix unicom;
     private boolean isChurch;
     /*
@@ -21,10 +21,11 @@ public class TileLayer {
             throw new IllegalArgumentException("传入的边缘数不匹配");
         }
     }*/
-    public TileLayer(boolean isChurch, Edge[] edges,AdjacencyMatrix unicom)
+    public TileLayer(boolean isChurch, EdgeTypeEnum[] edges,AdjacencyMatrix unicom)
     {
         this.isChurch = isChurch;
         this.edges = edges;
         this.unicom = unicom;
     }
+
 }

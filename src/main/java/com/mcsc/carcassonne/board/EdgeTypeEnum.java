@@ -2,7 +2,7 @@ package com.mcsc.carcassonne.board;
 
 public enum EdgeTypeEnum {
     //边缘全为田野
-    FILED,
+    FIELD,
     //边缘全为城市
     CITY,
     //边缘包含道路
