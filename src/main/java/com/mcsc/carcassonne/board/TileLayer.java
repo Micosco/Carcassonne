@@ -2,6 +2,8 @@ package com.mcsc.carcassonne.board;
 
 import com.mcsc.carcassonne.utility.AdjacencyMatrix;
 
+import java.util.Arrays;
+
 
 /**
  * {@code TileLayer} 用于存放板块各边缘信息
@@ -12,13 +14,28 @@ import com.mcsc.carcassonne.utility.AdjacencyMatrix;
  */
 
 public class TileLayer {
-    private Edge[] edges = new Edge[8];
+    private EdgeTypeEnum[] edges;
     private AdjacencyMatrix unicom;
-
+    private boolean isChurch;
+    /*
     public TileLayer(EdgeTypeEnum... edges) {
-
         if (edges.length != this.edges.length) {
             throw new IllegalArgumentException("传入的边缘数不匹配");
         }
+    }*/
+    public TileLayer(boolean isChurch, EdgeTypeEnum[] edges,AdjacencyMatrix unicom)
+    {
+        this.isChurch = isChurch;
+        this.edges = edges;
+        this.unicom = unicom;
+    }
+
+    @Override
+    public String toString() {
+        return "TileLayer{" +
+                "edges=" + Arrays.toString(edges) +
+                ", unicom=" + unicom +
+                ", isChurch=" + isChurch +
+                '}';
     }
 }

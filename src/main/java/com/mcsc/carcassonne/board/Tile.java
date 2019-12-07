@@ -2,6 +2,7 @@ package com.mcsc.carcassonne.board;
 
 import com.mcsc.carcassonne.game.Player;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,12 +15,7 @@ import java.util.Map;
  */
 
 public class Tile {
-    private TileLayer layer;
-    private int rotation;
-    private String expansion;
-    private int identifier;
     ArrayList<Meeple> meeples;
-
     /** get the number of players' meeple at the specified region
      *
      * @return number of players' meeple at the specified region
@@ -29,6 +25,50 @@ public class Tile {
 
         return meepleCount;
     }
+
+    private TileLayer layer;
+    private int rotation;
+    private String expansion;
+    private int identifier;
+    private String name;
+    public Tile(String expansion,int identifier) throws IOException {
+        this.identifier = identifier;
+        this.expansion = expansion;
+        this.name = expansion+identifier;
+        TileGenerator reader = new TileGenerator(".\\src\\main\\resources\\cardInfo.json");
+        layer = new TileLayer(reader.isChurch(name),
+                reader.getEdgeTypeEnum(name),
+                reader.getAdjacencyMatrix(name));
+    }
+
+    public int getIdentifier() {
+        return identifier;
+    }
+
+    public String getExpansion() {
+        return expansion;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public TileLayer getLayer() {
+        return layer;
+    }
+
+    @Override
+    public String toString() {
+        return "Tile{" +
+                "meeples=" + meeples +
+                ", layer=" + layer +
+                ", rotation=" + rotation +
+                ", expansion='" + expansion + '\'' +
+                ", identifier=" + identifier +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }
+
 
 

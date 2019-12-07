@@ -1,0 +1,61 @@
+{
+  "comment1": "包含了base包和inn包的卡片数据",
+  "comment2": "每组数据包括该卡片的卡片各边连通性以及各边类型，是否有盾牌标识，是否有教堂",
+  "baseTileNum": 1,
+  "innTileNum": 1,
+  "base0": {
+    "expansion": "base",
+    "identifier": "0",
+    "texturePath": ".//resources//textures//tile//base//0.jpg",
+    "edgeType": {
+      "0": "road",
+      "1": "city",
+      "2": "city",
+      "3": "city",
+      "4": "road",
+      "5": "field",
+      "6": "field",
+      "7": "field",
+      "8": "road"
+    },
+    "isShieldTile": false,
+    "AdjacencyMatrix":    [[]
+                          ,[]
+                          ,[]
+                          ,[]
+                          ,[]
+                          ,[]
+                          ,[]
+                          ,[]
+                          ,[]]
+    ,"isChurch":"false"
+  },
+
+  "inn0": {
+    "expansion": "inn",
+    "identifier": "0",
+    "texturePath": ".//resources//textures//tile//inn//0.jpg",
+    "edgeType": {
+      "0": "field",
+      "1": "field",
+      "2": "field",
+      "3": "field",
+      "4": "road",
+      "5": "field",
+      "6": "road",
+      "7": "field",
+      "8": "road"
+    },
+    "isShieldTile": false,
+    "AdjacencyMatrix":  [[1,1,1,1,0,1,0,1,0]
+                        ,[1,1,1,1,0,1,0,1,0]
+                        ,[1,1,1,1,0,1,0,1,0]
+                        ,[1,1,1,1,0,1,0,1,0]
+                        ,[0,0,0,0,0,0,1,0,1]
+                        ,[1,1,1,1,0,1,0,1,0]
+                        ,[0,0,0,0,1,0,0,0,1]
+                        ,[1,1,1,1,0,1,0,1,0]
+                        ,[0,0,0,0,1,0,1,0,0]],
+    "isChurch": false
+  }
+}
