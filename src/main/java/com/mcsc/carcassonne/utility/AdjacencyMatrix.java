@@ -1,6 +1,7 @@
 package com.mcsc.carcassonne.utility;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -60,5 +61,11 @@ public class AdjacencyMatrix {
             }
         }
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "AdjacencyMatrix{" +
+                "matrix=" + Arrays.deepToString(matrix);
     }
 }

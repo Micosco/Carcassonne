@@ -20,4 +20,6 @@ class BoardTest {
     @org.junit.jupiter.api.Test
     void settleScore() {
     }
+
+
 }

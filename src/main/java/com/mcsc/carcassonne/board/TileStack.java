@@ -21,17 +21,23 @@ public class TileStack {
         return tileStack.pop();
     }
 
-    public TileStack(String expansionName) throws IOException {
+    public TileStack(String expansionName){
         int num = new TileGenerator(".\\src\\main\\resources\\cardInfo.json").getTotalTileNum(expansionName);
         ArrayList<Tile> tileArrayList = new ArrayList<>();
         tileStack = new Stack<>();
         for (int i = 0; i < num; i++) {
-            Tile tile = new Tile("inn",i);
+            Tile tile = new Tile(expansionName,i);
             tileArrayList.add(tile);
-        }//test
+        }
         Collections.shuffle(tileArrayList);
         for (int i = 0; i < num; i++) {
             tileStack.push(tileArrayList.get(i));
-        }//test
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "TileStack{" +
+                "tileStack=" + tileStack;
     }
 }

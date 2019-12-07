@@ -31,7 +31,7 @@ public class Tile {
     private String expansion;
     private int identifier;
     private String name;
-    public Tile(String expansion,int identifier) throws IOException {
+    public Tile(String expansion,int identifier){
         this.identifier = identifier;
         this.expansion = expansion;
         this.name = expansion+identifier;
@@ -39,6 +39,18 @@ public class Tile {
         layer = new TileLayer(reader.isChurch(name),
                 reader.getEdgeTypeEnum(name),
                 reader.getAdjacencyMatrix(name));
+    }
+
+    @Override
+    public String toString() {
+        return "Tile{" +
+                "meeples=" + meeples +
+                ", layer=" + layer +
+                ", rotation=" + rotation +
+                ", expansion='" + expansion + '\'' +
+                ", identifier=" + identifier +
+                ", name='" + name + '\'' +
+                '}';
     }
 }
 
