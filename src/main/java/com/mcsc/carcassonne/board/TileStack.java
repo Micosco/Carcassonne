@@ -34,4 +34,10 @@ public class TileStack {
             tileStack.push(tileArrayList.get(i));
         }//test
     }
+
+    @Override
+    public String toString() {
+        return "TileStack{" +
+                "tileStack=" + tileStack;
+    }
 }

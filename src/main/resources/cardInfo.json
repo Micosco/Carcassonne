@@ -30,6 +30,7 @@
                           ,[]]
     ,"isChurch":"false"
   },
+
   "inn0": {
     "expansion": "inn",
     "identifier": "0",
@@ -55,6 +56,6 @@
                         ,[0,0,0,0,1,0,0,0,1]
                         ,[1,1,1,1,0,1,0,1,0]
                         ,[0,0,0,0,1,0,1,0,0]],
-    "hasChurch": false
+    "isChurch": false
   }
 }

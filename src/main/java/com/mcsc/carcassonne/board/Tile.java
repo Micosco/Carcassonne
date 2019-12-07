@@ -40,6 +40,35 @@ public class Tile {
                 reader.getEdgeTypeEnum(name),
                 reader.getAdjacencyMatrix(name));
     }
+
+    public int getIdentifier() {
+        return identifier;
+    }
+
+    public String getExpansion() {
+        return expansion;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public TileLayer getLayer() {
+        return layer;
+    }
+
+    @Override
+    public String toString() {
+        return "Tile{" +
+                "meeples=" + meeples +
+                ", layer=" + layer +
+                ", rotation=" + rotation +
+                ", expansion='" + expansion + '\'' +
+                ", identifier=" + identifier +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }
+
 
 

@@ -24,14 +24,14 @@ public class TileGenerator {
 
     /**
      * 构造方法
-     *
      * @param filePath ,传入文件相对路径。
+     * @value 文件路径，用于初始化对象时存入读取文件的相对路径。
      */
     public TileGenerator(String filePath) throws IOException {
-        this.filePath = filePath;
+
         FileReader fileReader = new FileReader(new File(filePath));
         BufferedReader bufferedReader = new BufferedReader(fileReader);
-        this.fileStr = new StringBuilder();
+        StringBuilder fileStr = new StringBuilder();
         String tempStr = bufferedReader.readLine();
         while (tempStr != null) {
             fileStr.append(tempStr);
@@ -80,7 +80,7 @@ public class TileGenerator {
         return isChurch;
     }
 
-    public EdgeTypeEnum StringToEdgeTypeEnum(String edge) {
+    public EdgeTypeEnum stringToEdgeTypeEnum(String edge) {
         EdgeTypeEnum typeEnum = null;
         if (edge.equals("field"))
             typeEnum = EdgeTypeEnum.FIELD;
@@ -100,7 +100,7 @@ public class TileGenerator {
             stringEdges[i] = jsonObject.getJSONObject(name).getJSONObject("edgeType").getString(String.valueOf(i));
         }
         for (int i = 0; i < 9; i++) {
-            edges[i] = StringToEdgeTypeEnum(stringEdges[i]);
+            edges[i] = stringToEdgeTypeEnum(stringEdges[i]);
         }
         return edges;
     }

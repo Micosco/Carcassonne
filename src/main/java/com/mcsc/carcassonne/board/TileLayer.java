@@ -2,6 +2,8 @@ package com.mcsc.carcassonne.board;
 
 import com.mcsc.carcassonne.utility.AdjacencyMatrix;
 
+import java.util.Arrays;
+
 
 /**
  * {@code TileLayer} 用于存放板块各边缘信息
@@ -28,4 +30,12 @@ public class TileLayer {
         this.unicom = unicom;
     }
 
+    @Override
+    public String toString() {
+        return "TileLayer{" +
+                "edges=" + Arrays.toString(edges) +
+                ", unicom=" + unicom +
+                ", isChurch=" + isChurch +
+                '}';
+    }
 }
