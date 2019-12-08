@@ -21,5 +21,10 @@ public class GamingStatsPanel extends JPanel {
         for (var player : GameState.getCurrentGameState().getPlayersList()) {
             add(new PlayerInfo(player), "span 3 1");
         }
+
+        TileComponent previewTile = new TileComponent();
+        previewTile.replaceTile(GameState.getCurrentGameState().getBoard().getTileStack().top());
+        previewTile.setPreferredSize(new Dimension(80,80));
+        add(previewTile);
     }
 }

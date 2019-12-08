@@ -63,6 +63,10 @@ public class AdjacencyMatrix {
         return result;
     }
 
+    public boolean get(int row, int column) {
+        return matrix[row][column];
+    }
+
     @Override
     public String toString() {
         return "AdjacencyMatrix{" +

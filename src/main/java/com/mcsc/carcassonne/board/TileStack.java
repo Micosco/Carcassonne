@@ -21,6 +21,10 @@ public class TileStack {
         return tileStack.pop();
     }
 
+    public Tile top() {
+        return tileStack.peek();
+    }
+
     public TileStack(String expansionName){
         int num = new TileGenerator(".\\src\\main\\resources\\cardInfo.json").getTotalTileNum(expansionName);
         ArrayList<Tile> tileArrayList = new ArrayList<>();
@@ -38,12 +42,6 @@ public class TileStack {
 
     public static Tile getOriginTile() {
         return OriginTile;
-    }
-
-    @Override
-    public String toString() {
-        return "TileStack{" +
-                "tileStack=" + tileStack;
     }
 
     @Override

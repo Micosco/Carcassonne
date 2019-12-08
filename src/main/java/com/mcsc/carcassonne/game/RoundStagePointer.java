@@ -3,22 +3,25 @@ package com.mcsc.carcassonne.game;
 public class RoundStagePointer {
     private RoundStage[] roundStages;
     private RoundStage  currentStage;
-    public static RoundStagePointer sharedPointer;
+    private static RoundStagePointer sharedPointer = new RoundStagePointer();
 
-    private RoundStagePointer(){}
+    private RoundStagePointer(){
+        this.roundStages = RoundStage.getDefaultRoundStages();
+        this.currentStage = this.roundStages[0];
+    }
 
     public static RoundStagePointer getDefaultStagePointer() {
-        if (sharedPointer != null) {
-            return sharedPointer;
-        }
-        sharedPointer = new RoundStagePointer();
-        sharedPointer.roundStages = RoundStage.getDefaultRoundStages();
-        sharedPointer.currentStage = sharedPointer.roundStages[0];
         return sharedPointer;
     }
 
     public void nextStage() {
         currentStage = roundStages[(currentStage.ordinal() + 1) % roundStages.length];
+        System.out.printf("Stage:" + currentStage);
+    }
+
+    public void nextRound() {
+        currentStage = roundStages[0];
+        GameState.getCurrentGameState().nextPlayer();
     }
 
     public RoundStage getCurrentStage() {

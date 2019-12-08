@@ -33,6 +33,7 @@ public class GamingPanel extends JPanel {
         remove(returnButton);
         gamingStatePanel = new GamingStatsPanel();
         boardPanel = new BoardPanel();
+        boardPanel.placeFirstTile();
         returnButton = new ReturnButton();
         add(gamingStatePanel, "cell 0 0 3 8");
         add(boardPanel, "cell 3 0 13 9");

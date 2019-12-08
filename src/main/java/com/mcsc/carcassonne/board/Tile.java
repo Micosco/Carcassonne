@@ -1,11 +1,10 @@
 package com.mcsc.carcassonne.board;
 
+import com.mcsc.carcassonne.game.GameState;
 import com.mcsc.carcassonne.game.Player;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 游玩时所使用的板块
@@ -15,32 +14,33 @@ import java.util.Map;
  */
 
 public class Tile {
-    ArrayList<Meeple> meeples;
-    /** get the number of players' meeple at the specified region
-     *
-     * @return number of players' meeple at the specified region
-     */
-    public Map<Player, Integer> getMeepleCount() {
-        Map<Player, Integer> meepleCount = new HashMap<>(6);
-
-        return meepleCount;
-    }
-
+    Meeple[] meeples;
     private TileLayer layer;
     private int rotation;
     private String expansion;
     private int identifier;
     private String name;
-    private String texturePath;
+
     public Tile(String expansion,int identifier){
         this.identifier = identifier;
         this.expansion = expansion;
         this.name = expansion+identifier;
         TileGenerator reader = new TileGenerator(".\\src\\main\\resources\\cardInfo.json");
-        this.texturePath = reader.getTexturePath(name);
         layer = new TileLayer(reader.isChurch(name),
                 reader.getEdgeTypeEnum(name),
                 reader.getAdjacencyMatrix(name));
+    }
+
+    public void placeMeeple(EdgeDirectionEnum direction) {
+        int realDirection = direction.ordinal() - rotation;
+        if (realDirection < 0) realDirection += 8;
+        Meeple newMeeple = new Meeple(GameState.getCurrentGameState().getCurrentPlayer());
+        if (direction == EdgeDirectionEnum.END) meeples[8] = newMeeple;
+        else meeples[realDirection % 8] = newMeeple;
+    }
+
+    public Meeple[] getMeeples() {
+        return meeples;
     }
 
     public int getIdentifier() {
@@ -59,6 +59,10 @@ public class Tile {
         return layer;
     }
 
+    public int getRotation() {
+        return rotation;
+    }
+
     @Override
     public String toString() {
         return "Tile{" +
@@ -71,22 +75,6 @@ public class Tile {
                 '}';
     }
 
-    public String getTexturePath() {
-        return texturePath;
-    }
 
-    @Override
-    public String toString() {
-        return "Tile{" +
-                "meeples=" + meeples +
-                ", layer=" + layer +
-                ", rotation=" + rotation +
-                ", expansion='" + expansion + '\'' +
-                ", identifier=" + identifier +
-                ", name='" + name + '\'' +
-                ", texturePath='" + texturePath + '\'' +
-                '}';
-    }
 }
-
 

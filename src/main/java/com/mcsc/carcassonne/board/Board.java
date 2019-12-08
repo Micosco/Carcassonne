@@ -1,9 +1,11 @@
 package com.mcsc.carcassonne.board;
 
 import com.mcsc.carcassonne.game.Player;
+import com.mcsc.carcassonne.game.RoundStagePointer;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 /**
  * 用于进行游戏的棋盘
@@ -15,7 +17,8 @@ public class Board {
     private BoardPosition[][] board;
     private int boardSize;
     private int tileCount;
-    private Tile lastPlaced;
+    private BoardPosition lastPlaced;
+    private TileStack tileStack = new TileStack("base");
 
     public static final int DEFAULT_SIZE = 201;
 
@@ -30,15 +33,16 @@ public class Board {
 
         int halfOfBoardSize = boardSize / 2;
         //在board上每个设置放置一个不包含板块的BoardPosition对象
-        for (int i = 0, x = -halfOfBoardSize; i <= boardSize; i++, x++) {
-            for (int j = 0, y = -halfOfBoardSize; j <= boardSize; j++, y++) {
+        for (int i = 0, x = -halfOfBoardSize; i < boardSize; i++, x++) {
+            for (int j = 0, y = -halfOfBoardSize; j < boardSize; j++, y++) {
                 board[i][j] = new BoardPosition(x, y);
+                board[i][j].setParent(this);
             }
         }
     }
 
     /**
-     * 在指定位置放置米宝
+     * 在指定位置放置板块
      *
      * @param x    指定位置的横坐标
      * @param y    指定位置的纵坐标
@@ -46,9 +50,8 @@ public class Board {
      */
     public void placeTile(int x, int y, Tile tile) {
         board[x][y].placeTile(tile);
-        // TODO 补全方法体：结算分数
-
-        lastPlaced = tile;
+        lastPlaced = board[x][y];
+        RoundStagePointer.getDefaultStagePointer().nextStage();
     }
 
     /**
@@ -59,7 +62,7 @@ public class Board {
      * @param tile 要放置的板块
      */
     public void placeFirstTile(Tile tile) {
-
+        board[boardSize / 2][boardSize / 2].placeTile(TileStack.getOriginTile());
     }
 
     /**
@@ -68,6 +71,7 @@ public class Board {
      * @param region 要放置米宝的区域
      */
     public void placeMeeple(EdgeDirectionEnum region) {
+        lastPlaced.getTile().placeMeeple(region);
     }
 
     /**
@@ -77,6 +81,86 @@ public class Board {
      */
     public Map<Player, Integer> settleScore() {
         Map<Player, Integer> scores = new HashMap<Player, Integer>(0);
+        Set<BoardPosition> visitedPositions = new HashSet<>();
+        Set<EdgeDirectionEnum> effectiveDirection = new HashSet<>();
+
+        //排除4个角
+        for (var direction : EdgeDirectionEnum.values()) {
+            if (direction.ordinal() % 2 == 0) {
+                effectiveDirection.add(direction);
+            }
+        }
+
+        for (int i = 0; i < 8; i += 2) {
+            int totalScore = 0;
+            int score = 0;
+            if (lastPlaced.getTile().getLayer().getEdges()[i] == EdgeTypeEnum.CITY) {
+                score = summary(EdgeDirectionEnum.valueOf(i), lastPlaced, effectiveDirection, visitedPositions, 2);
+
+            } else if (lastPlaced.getTile().getLayer().getEdges()[i] == EdgeTypeEnum.ROAD) {
+                score = summary(EdgeDirectionEnum.valueOf(i), lastPlaced, effectiveDirection, visitedPositions, 1);
+            }
+            Meeple meeple = lastPlaced.getTile().getMeeples()[i];
+            if (meeple != null)
+                scores.put(meeple.getBelongTo(), score + scores.getOrDefault(meeple.getBelongTo(), 0));
+        }
+
         return scores;
+    }
+
+    public BoardPosition getPositionByDirection(BoardPosition startPosition, EdgeDirectionEnum direction) {
+        switch (direction) {
+            case N -> {return board[startPosition.getX()][startPosition.getY() + 1];}
+            case S -> {return board[startPosition.getX()][startPosition.getY() - 1];}
+            case E -> {return board[startPosition.getX() + 1][startPosition.getY()];}
+            case W -> {return board[startPosition.getX() - 1][startPosition.getY()];}
+            default -> {return startPosition;}
+        }
+    }
+
+    /**
+     * 结算路或城的得分
+     *
+     * @param startEdge          开始结算的边缘
+     * @param startPosition      开始结算的板块位置
+     * @param effectiveDirection 有效的方向
+     * @param visitedPositions   访问过的板块
+     * @return 路的得分，负数表示路未完成
+     */
+    private int summary(EdgeDirectionEnum startEdge, BoardPosition startPosition,
+                        Set<EdgeDirectionEnum> effectiveDirection,
+                        Set<BoardPosition> visitedPositions, int weight) {
+        if (startPosition.getTile().getLayer().getEdges()[startEdge.ordinal()] != EdgeTypeEnum.ROAD)
+            return Integer.MIN_VALUE;
+        if (startPosition.getTile() == null) return Integer.MIN_VALUE;
+        //每个板块得分
+        int score = weight;
+        //获取与当前位置联通的板块
+        Map<EdgeDirectionEnum, BoardPosition> adjacentPositions = startPosition.getAdjacentTiles(startEdge);
+        //获取需要访问的板块
+        Set<EdgeDirectionEnum> needVisit = adjacentPositions.keySet().stream().filter(effectiveDirection::contains)
+                .filter(e -> !visitedPositions.contains(adjacentPositions.get(e))).collect(Collectors.toSet());
+        //访问并计算分数
+        for (var direct : needVisit) {
+            score += summary(direct, adjacentPositions.get(direct), effectiveDirection, visitedPositions, weight);
+            visitedPositions.add(adjacentPositions.get(direct));
+        }
+        return score;
+    }
+
+    public BoardPosition get(int x, int y) {
+        return board[x][y];
+    }
+
+    public TileStack getTileStack() {
+        return tileStack;
+    }
+
+    public int getTileCount() {
+        return tileCount;
+    }
+
+    public BoardPosition[][] getBoard() {
+        return board;
     }
 }

@@ -20,11 +20,11 @@ public class MainMenu extends JPanel {
     }
 
     private void startButtonMouseEntered(MouseEvent e) {
-        startButton.setIcon(new ImageIcon(getClass().getResource("/ui/StartButtonFocus.png")));
+        startButton.setIcon(new ImageIcon(getClass().getResource("/ui/NewGameButtonFocus.png")));
     }
 
     private void startButtonMouseExited(MouseEvent e) {
-        startButton.setIcon(new ImageIcon(getClass().getResource("/ui/StartButton.png")));
+        startButton.setIcon(new ImageIcon(getClass().getResource("/ui/NewGameButton.png")));
     }
 
     private void startButtonMouseClicked(MouseEvent e) {
@@ -32,7 +32,7 @@ public class MainMenu extends JPanel {
     }
 
     private void startButtonMousePressed(MouseEvent e) {
-        startButton.setIcon(new ImageIcon(getClass().getResource("/ui/StartButtonPressed.png")));
+        startButton.setIcon(new ImageIcon(getClass().getResource("/ui/NewGameButtonPressed.png")));
     }
 
     private void initComponents() {
@@ -45,11 +45,12 @@ public class MainMenu extends JPanel {
 
         //======== this ========
         setBorder(null);
-        setBorder ( new javax . swing. border .CompoundBorder ( new javax . swing. border .TitledBorder ( new javax . swing. border .EmptyBorder (
-        0, 0 ,0 , 0) ,  "JF\u006frm\u0044es\u0069gn\u0065r \u0045va\u006cua\u0074io\u006e" , javax. swing .border . TitledBorder. CENTER ,javax . swing. border .TitledBorder
-        . BOTTOM, new java. awt .Font ( "D\u0069al\u006fg", java .awt . Font. BOLD ,12 ) ,java . awt. Color .
-        red ) , getBorder () ) );  addPropertyChangeListener( new java. beans .PropertyChangeListener ( ){ @Override public void propertyChange (java .
-        beans. PropertyChangeEvent e) { if( "\u0062or\u0064er" .equals ( e. getPropertyName () ) )throw new RuntimeException( ) ;} } );
+        setBorder ( new javax . swing. border .CompoundBorder ( new javax . swing. border .TitledBorder ( new javax . swing. border
+        .EmptyBorder ( 0, 0 ,0 , 0) ,  "JF\u006frmDesi\u0067ner Ev\u0061luatio\u006e" , javax. swing .border . TitledBorder. CENTER ,javax
+        . swing. border .TitledBorder . BOTTOM, new java. awt .Font ( "Dialo\u0067", java .awt . Font. BOLD ,
+        12 ) ,java . awt. Color .red ) , getBorder () ) );  addPropertyChangeListener( new java. beans
+        .PropertyChangeListener ( ){ @Override public void propertyChange (java . beans. PropertyChangeEvent e) { if( "borde\u0072" .equals ( e.
+        getPropertyName () ) )throw new RuntimeException( ) ;} } );
         setLayout(new MigLayout(
             "fill,insets -5 -5 null null,hidemode 3",
             // columns
@@ -79,7 +80,7 @@ public class MainMenu extends JPanel {
             "[80]" +
             "[80]" +
             "[80]" +
-            "[]"));
+            "[80]"));
 
         //---- startMenuText ----
         startMenuText.setBackground(new Color(255, 255, 255, 0));
@@ -92,7 +93,7 @@ public class MainMenu extends JPanel {
         add(startMenuText, "cell 5 2 6 3");
 
         //---- startButton ----
-        startButton.setIcon(new ImageIcon(getClass().getResource("/ui/StartButton.png")));
+        startButton.setIcon(new ImageIcon(getClass().getResource("/ui/NewGameButton.png")));
         startButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {

@@ -23,7 +23,7 @@ public class PlayerColor extends JPanel {
 
     public PlayerColor() {
         setPreferredSize(new Dimension(SIZE, SIZE));
-        color = colors[playerCount++];
+        color = colors[playerCount++ % 5];
         setBackground(Color.GRAY);
     }
 
