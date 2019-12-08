@@ -1,7 +1,7 @@
 {
   "comment1": "包含了base包和inn包的卡片数据",
   "comment2": "每组数据包括该卡片的卡片各边连通性以及各边类型，是否有盾牌标识，是否有教堂",
-  "baseTileNum": 1,
+  "baseTileNum": 5,
   "innTileNum": 1,
   "base0": {
     "expansion": "base",
@@ -19,18 +19,121 @@
       "8": "road"
     },
     "isShieldTile": false,
-    "AdjacencyMatrix":    [[]
-                          ,[]
-                          ,[]
-                          ,[]
-                          ,[]
-                          ,[]
-                          ,[]
-                          ,[]
-                          ,[]]
+    "AdjacencyMatrix":    [[0, 0, 0, 0, 0, 0, 0, 0, 0]
+                          ,[0, 0, 0, 0, 0, 0, 0, 0, 0]
+                          ,[0, 0, 0, 0, 0, 0, 0, 0, 0]
+                          ,[0, 0, 0, 0, 0, 0, 0, 0, 0]
+                          ,[0, 0, 0, 0, 0, 0, 0, 0, 1]
+                          ,[0, 0, 0, 0, 0, 0, 0, 0, 0]
+                          ,[0, 0, 0, 0, 0, 0, 0, 0, 0]
+                          ,[0, 0, 0, 0, 0, 0, 0, 0, 0]
+                          ,[0, 0, 0, 0, 1, 0, 0, 0, 0]]
     ,"isChurch":"false"
   },
-
+"base1":{
+    "expansion": "base",
+    "identifier": "1",
+    "texturePath": ".//resources//textures//tile//base//1.jpg",
+    "edgeType": {
+      "0": "road",
+      "1": "field",
+      "2": "road",
+      "3": "field",
+      "4": "road",
+      "5": "field",
+      "6": "road",
+      "7": "field"
+    },
+    "isShieldTile": false,
+    "AdjacencyMatrix":    [[0, 0, 0, 0, 0, 0, 0, 0, 0]
+                          ,[0, 0, 0, 0, 0, 0, 0, 0, 0]
+                          ,[0, 0, 0, 0, 0, 0, 0, 0, 1]
+                          ,[0, 0, 0, 0, 0, 0, 0, 0, 0]
+                          ,[0, 0, 0, 0, 0, 0, 0, 0, 1]
+                          ,[0, 0, 0, 0, 0, 0, 0, 0, 0]
+                          ,[0, 0, 0, 0, 0, 0, 0, 0, 1]
+                          ,[0, 0, 0, 0, 0, 0, 0, 0, 0]
+                          ,[0, 0, 1, 0, 1, 0, 1, 0, 0]]
+    ,"isChurch":false
+},
+  "base2":{
+      "expansion": "base",
+      "identifier": "2",
+      "texturePath": ".//resources//textures//tile//base//2.jpg",
+      "edgeType": {
+        "0": "road",
+        "1": "field",
+        "2": "field",
+        "3": "field",
+        "4": "road",
+        "5": "field",
+        "6": "field",
+        "7": "field"
+      },
+      "isShieldTile": false,
+      "AdjacencyMatrix":    [[0, 0, 0, 0, 0, 0, 0, 0, 0]
+                            ,[0, 0, 0, 0, 0, 0, 0, 0, 0]
+                            ,[0, 0, 0, 0, 0, 0, 0, 0, 0]
+                            ,[0, 0, 0, 0, 0, 0, 0, 0, 0]
+                            ,[0, 0, 0, 0, 0, 0, 0, 0, 1]
+                            ,[0, 0, 0, 0, 0, 0, 0, 0, 0]
+                            ,[0, 0, 0, 0, 0, 0, 0, 0, 0]  
+                            ,[0, 0, 0, 0, 0, 0, 0, 0, 0]
+                            ,[0, 0, 0, 0, 1, 0, 0, 0, 0]]
+      ,"isChurch":false
+  },
+  "base3":{
+      "expansion": "base",
+      "identifier": "3",
+      "texturePath": ".//resources//textures//tile//base//3.jpg",
+      "edgeType": {
+        "0": "city",
+        "1": "city",
+        "2": "city",
+        "3": "city",
+        "4": "city",
+        "5": "city",
+        "6": "city",
+        "7": "city"
+      },
+      "isShieldTile": true,
+      "AdjacencyMatrix":    [[1, 1, 1, 1, 1, 1, 1, 1, 1]
+                            ,[1, 1, 1, 1, 1, 1, 1, 1, 1]
+                            ,[1, 1, 1, 1, 1, 1, 1, 1, 1]
+                            ,[1, 1, 1, 1, 1, 1, 1, 1, 1]
+                            ,[1, 1, 1, 1, 1, 1, 1, 1, 1]
+                            ,[1, 1, 1, 1, 1, 1, 1, 1, 1]
+                            ,[1, 1, 1, 1, 1, 1, 1, 1, 1]
+                            ,[1, 1, 1, 1, 1, 1, 1, 1, 1]
+                            ,[1, 1, 1, 1, 1, 1, 1, 1, 1]]
+      ,"isChurch":false
+  },
+"base4":{
+    "expansion": "base",
+    "identifier": "4",
+    "texturePath": ".//resources//textures//tile//base//4.jpg",
+    "edgeType": {
+      "0": "road",
+      "1": "city",
+      "2": "city",
+      "3": "city",
+      "4": "road",
+      "5": "field",
+      "6": "road",
+      "7": "field"
+    },
+    "isShieldTile": false,
+    "AdjacencyMatrix":    [[0, 0, 0, 0, 0, 0, 0, 0, 0]
+                          ,[0, 0, 1, 0, 0, 0, 0, 0, 0]
+                          ,[0, 1, 0, 1, 0, 0, 0, 0, 0]
+                          ,[0, 0, 1, 0, 0, 0, 0, 0, 0]
+                          ,[0, 0, 0, 0, 0, 0, 0, 0, 1]
+                          ,[0, 0, 0, 0, 0, 0, 0, 0, 0]
+                          ,[0, 0, 0, 0, 0, 0, 0, 0, 0]
+                          ,[0, 0, 0, 0, 0, 0, 0, 0, 0]
+                          ,[0, 0, 0, 0, 1, 0, 0, 0, 0]]
+    ,"isChurch":false
+},
   "inn0": {
     "expansion": "inn",
     "identifier": "0",
@@ -56,6 +159,6 @@
                         ,[0,0,0,0,1,0,0,0,1]
                         ,[1,1,1,1,0,1,0,1,0]
                         ,[0,0,0,0,1,0,1,0,0]],
-    "isChurch": false
+    "hasChurch": false
   }
 }

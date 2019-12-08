@@ -12,7 +12,7 @@ import java.util.Stack;
 public class TileStack {
     private Stack<Tile> tileStack;
     private ArrayList<Tile> tileArrayList;
-
+    private static Tile OriginTile;
     public boolean isEmpty() {
         return tileStack.empty();
     }
@@ -21,18 +21,29 @@ public class TileStack {
         return tileStack.pop();
     }
 
-    public TileStack(String expansionName) throws IOException {
+    public TileStack(String expansionName){
         int num = new TileGenerator(".\\src\\main\\resources\\cardInfo.json").getTotalTileNum(expansionName);
         ArrayList<Tile> tileArrayList = new ArrayList<>();
         tileStack = new Stack<>();
-        for (int i = 0; i < num; i++) {
-            Tile tile = new Tile("inn",i);
+        OriginTile = new Tile("base",0);
+        for (int i = 1; i < num; i++) {
+            Tile tile = new Tile(expansionName,i);
             tileArrayList.add(tile);
-        }//test
+        }
         Collections.shuffle(tileArrayList);
-        for (int i = 0; i < num; i++) {
-            tileStack.push(tileArrayList.get(i));
-        }//test
+        for (Tile tile : tileArrayList) {
+            tileStack.push(tile);
+        }
+    }
+
+    public static Tile getOriginTile() {
+        return OriginTile;
+    }
+
+    @Override
+    public String toString() {
+        return "TileStack{" +
+                "tileStack=" + tileStack;
     }
 
     @Override

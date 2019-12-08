@@ -27,17 +27,22 @@ public class TileGenerator {
      * @param filePath ,传入文件相对路径。
      * @value 文件路径，用于初始化对象时存入读取文件的相对路径。
      */
-    public TileGenerator(String filePath) throws IOException {
-
-        FileReader fileReader = new FileReader(new File(filePath));
-        BufferedReader bufferedReader = new BufferedReader(fileReader);
-        StringBuilder fileStr = new StringBuilder();
-        String tempStr = bufferedReader.readLine();
-        while (tempStr != null) {
-            fileStr.append(tempStr);
-            tempStr = bufferedReader.readLine();
+    public TileGenerator(String filePath){
+        this.filePath = filePath;
+        try {
+            FileReader fileReader = new FileReader(new File(filePath));
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            this.fileStr = new StringBuilder();
+            String tempStr = bufferedReader.readLine();
+            while (tempStr != null) {
+                fileStr.append(tempStr);
+                tempStr = bufferedReader.readLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         //将json文件内容读入fileStr字符串中。
+        assert fileStr != null;
         this.jsonObject = new JSONObject(fileStr.toString());
         //该jsonObject对象存储了格式化过的json文件内容。
     }
@@ -80,7 +85,7 @@ public class TileGenerator {
         return isChurch;
     }
 
-    public EdgeTypeEnum stringToEdgeTypeEnum(String edge) {
+    public EdgeTypeEnum StringToEdgeTypeEnum(String edge) {
         EdgeTypeEnum typeEnum = null;
         if (edge.equals("field"))
             typeEnum = EdgeTypeEnum.FIELD;
@@ -94,13 +99,13 @@ public class TileGenerator {
     }
 
     public EdgeTypeEnum[] getEdgeTypeEnum(String name) {
-        String[] stringEdges = new String[9];
-        EdgeTypeEnum[] edges = new EdgeTypeEnum[9];
-        for (int i = 0; i < 9; i++) {
+        String[] stringEdges = new String[8];
+        EdgeTypeEnum[] edges = new EdgeTypeEnum[8];
+        for (int i = 0; i < 8; i++) {
             stringEdges[i] = jsonObject.getJSONObject(name).getJSONObject("edgeType").getString(String.valueOf(i));
         }
-        for (int i = 0; i < 9; i++) {
-            edges[i] = stringToEdgeTypeEnum(stringEdges[i]);
+        for (int i = 0; i < 8; i++) {
+            edges[i] = StringToEdgeTypeEnum(stringEdges[i]);
         }
         return edges;
     }
@@ -111,5 +116,10 @@ public class TileGenerator {
     public int getTotalTileNum(String expansion) {
         String name = expansion + "TileNum";
         return jsonObject.getInt(name);
+    }
+
+    public String getTexturePath(String name)
+    {
+        return jsonObject.getJSONObject(name).getString("texturePath");
     }
 }

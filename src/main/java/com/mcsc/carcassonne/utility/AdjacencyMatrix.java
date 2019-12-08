@@ -66,10 +66,6 @@ public class AdjacencyMatrix {
     @Override
     public String toString() {
         return "AdjacencyMatrix{" +
-                "matrix=" + Arrays.deepToString(matrix) +
-                ", row=" + row +
-                ", column=" + column +
-                ", isSquare=" + isSquare +
-                '}';
+                "matrix=" + Arrays.deepToString(matrix);
     }
 }
