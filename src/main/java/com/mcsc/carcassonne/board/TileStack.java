@@ -12,7 +12,7 @@ import java.util.Stack;
 public class TileStack {
     private Stack<Tile> tileStack;
     private ArrayList<Tile> tileArrayList;
-
+    private static Tile OriginTile;
     public boolean isEmpty() {
         return tileStack.empty();
     }
@@ -25,14 +25,19 @@ public class TileStack {
         int num = new TileGenerator(".\\src\\main\\resources\\cardInfo.json").getTotalTileNum(expansionName);
         ArrayList<Tile> tileArrayList = new ArrayList<>();
         tileStack = new Stack<>();
-        for (int i = 0; i < num; i++) {
+        OriginTile = new Tile("base",0);
+        for (int i = 1; i < num; i++) {
             Tile tile = new Tile(expansionName,i);
             tileArrayList.add(tile);
         }
         Collections.shuffle(tileArrayList);
-        for (int i = 0; i < num; i++) {
-            tileStack.push(tileArrayList.get(i));
+        for (Tile tile : tileArrayList) {
+            tileStack.push(tile);
         }
+    }
+
+    public static Tile getOriginTile() {
+        return OriginTile;
     }
 
     @Override

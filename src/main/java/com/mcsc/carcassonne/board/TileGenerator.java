@@ -117,4 +117,9 @@ public class TileGenerator {
         String name = expansion + "TileNum";
         return jsonObject.getInt(name);
     }
+
+    public String getTexturePath(String name)
+    {
+        return jsonObject.getJSONObject(name).getString("texturePath");
+    }
 }

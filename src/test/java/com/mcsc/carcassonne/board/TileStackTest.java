@@ -9,5 +9,6 @@ class TileStackTest {
     void printStackInfo()
     {
         System.out.println(new TileStack("base"));
+        System.out.println(TileStack.getOriginTile());
     }
 }
