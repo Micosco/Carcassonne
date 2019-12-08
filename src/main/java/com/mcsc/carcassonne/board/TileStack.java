@@ -42,7 +42,11 @@ public class TileStack {
 
     @Override
     public String toString() {
-        return "TileStack{" +
+        return getStackDepth() + "TileStack{" +
                 "tileStack=" + tileStack;
+    }
+    public int getStackDepth()
+    {
+        return tileStack.size();
     }
 }
