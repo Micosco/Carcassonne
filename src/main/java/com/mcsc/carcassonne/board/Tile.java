@@ -2,6 +2,7 @@ package com.mcsc.carcassonne.board;
 
 import com.mcsc.carcassonne.game.GameState;
 import com.mcsc.carcassonne.game.Player;
+import com.mcsc.carcassonne.game.RoundStagePointer;
 
 import java.io.IOException;
 import java.util.*;
@@ -29,15 +30,20 @@ public class Tile {
         layer = new TileLayer(reader.isChurch(name),
                 reader.getEdgeTypeEnum(name),
                 reader.getAdjacencyMatrix(name));
+        meeples = new Meeple[9];
     }
 
-    public void placeMeeple(EdgeDirectionEnum direction) {
+    public Meeple placeMeeple(EdgeDirectionEnum direction) {
         int realDirection = direction.ordinal() - rotation;
         if (realDirection < 0) realDirection += 8;
         Meeple newMeeple = new Meeple(GameState.getCurrentGameState().getCurrentPlayer());
         if (direction == EdgeDirectionEnum.END) meeples[8] = newMeeple;
         else meeples[realDirection % 8] = newMeeple;
+        RoundStagePointer.getDefaultStagePointer().nextStage();
+
+        return newMeeple;
     }
+
 
     public Meeple[] getMeeples() {
         return meeples;

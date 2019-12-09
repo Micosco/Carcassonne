@@ -45,6 +45,9 @@ public class AdjacencyMatrix {
 
     public Set<Integer> getRow(int row) {
         Set<Integer> result = new HashSet<Integer>();
+        // 将(row, row)元素添加进结果，保证自反性
+        // 原因：保存的矩阵信息中不包含自反
+        result.add(row);
         for (int i = 0; i < column; i++) {
             if (matrix[row][i]) {
                 result.add(i);

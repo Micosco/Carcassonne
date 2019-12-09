@@ -16,7 +16,8 @@ public class RoundStagePointer {
 
     public void nextStage() {
         currentStage = roundStages[(currentStage.ordinal() + 1) % roundStages.length];
-        System.out.printf("Stage:" + currentStage);
+        if (currentStage == RoundStage.PLACE_TILE) GameState.getCurrentGameState().nextPlayer();
+        System.out.println("Stage:" + currentStage);
     }
 
     public void nextRound() {

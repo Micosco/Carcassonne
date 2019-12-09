@@ -39,7 +39,7 @@ public class PlayerSettingPanel extends JPanel {
         players.add(playerInfo5);
     }
 
-    public ArrayList<PlayerInfo> getPlayersInfo() {
+    public ArrayList<PlayerInfo> getEnabledPlayersInfo() {
         ArrayList<PlayerInfo> enabledPlayers = new ArrayList<>();
         for (var player : players) {
             if (player.isEnable()) {
@@ -58,9 +58,13 @@ public class PlayerSettingPanel extends JPanel {
     }
 
     private void StartGameButtonMouseClicked(MouseEvent e) {
-        GameState.initialNewGame();
-        MainFrame.getMainWindow().switchPanel("Gaming");
-        GamingPanel.getPanel().initial();
+        if (getEnabledPlayersInfo().size() > 0) {
+            GameState.initialNewGame();
+            MainFrame.getMainWindow().switchPanel("Gaming");
+            GamingPanel.getPanel().initial();
+        } else {
+            JOptionPane.showMessageDialog(null, "请添加至少一个玩家");
+        }
     }
 
     private void StartGameButtonMousePressed(MouseEvent e) {

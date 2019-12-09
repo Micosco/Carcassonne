@@ -5,7 +5,6 @@ import com.mcsc.carcassonne.board.Board;
 import com.mcsc.carcassonne.board.TileStack;
 import com.mcsc.carcassonne.ui.players.PlayerInfo;
 import com.mcsc.carcassonne.ui.players.PlayerSettingPanel;
-import com.mcsc.carcassonne.ui.players.PlayersPanel;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -36,7 +35,7 @@ public class GameState {
         GameState newGame = new GameState();
 
         //获取玩家列表
-        newGame.initialPlayerList(PlayerSettingPanel.getPanel().getPlayersInfo());
+        newGame.initialPlayerList(PlayerSettingPanel.getPanel().getEnabledPlayersInfo());
         return newGame;
     }
 
@@ -44,6 +43,7 @@ public class GameState {
         for (var player : players) {
             this.players.add(new Player(player.getID(), player.getColorState().getColor()));
         }
+        currentPlayer = this.players.get(0);
     }
 
     public static GameState getCurrentGameState() {

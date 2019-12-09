@@ -23,8 +23,15 @@ public class GamingStatsPanel extends JPanel {
         }
 
         TileComponent previewTile = new TileComponent();
-        previewTile.replaceTile(GameState.getCurrentGameState().getBoard().getTileStack().top());
-        previewTile.setPreferredSize(new Dimension(80,80));
+        previewTile.setPreferredSize(new Dimension(80, 80));
         add(previewTile);
+
+        Runnable resetPreviewImage = () -> {
+            while (true) {
+                previewTile.replaceTile(GameState.getCurrentGameState().getBoard().getTileStack().top());
+            }
+        };
+        Thread t = new Thread(resetPreviewImage);
+        t.start();
     }
 }

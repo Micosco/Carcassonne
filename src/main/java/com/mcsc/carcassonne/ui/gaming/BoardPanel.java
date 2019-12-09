@@ -18,6 +18,7 @@ import java.util.ArrayList;
  */
 public class BoardPanel extends JPanel {
     private ArrayList<TileComponent> placedTile = new ArrayList<>();
+    private boolean modifying;
 
     public BoardPanel() {
         setPreferredSize(new Dimension(1040, 720));
@@ -26,6 +27,7 @@ public class BoardPanel extends JPanel {
         addMouseListener(mouseListener);
         addMouseListener(new TilePlaceListener());
         addMouseMotionListener(mouseListener);
+        realTimeRefresh();
     }
 
     public void placeTile(int x, int y) {
@@ -33,20 +35,45 @@ public class BoardPanel extends JPanel {
         Tile newTile = board.getTileStack().draw();
         board.placeTile(x, y, newTile);
 
-        TileComponent comp = new TileComponent(board.get(x, y));
+        TileComponent comp = new TileComponent(board.getLastPlaced());
         placedTile.add(comp);
         add(comp);
+        comp.recalculatePosition();
+    }
+
+    private void realTimeRefresh() {
+        Runnable refresh = () -> {
+            while (true) {
+                if (!modifying) {
+                    for (var tile : placedTile) {
+                        tile.repaint();
+                    }
+                    try {
+                        Thread.sleep(15);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
+        Thread t = new Thread(refresh);
+        t.start();
     }
 
     public void placeFirstTile() {
-        TileComponent first = new TileComponent(GameState.getCurrentGameState().getBoard().get(100, 100));
+        TileComponent first = new TileComponent(GameState.getCurrentGameState().getBoard().get(0, 0));
+        modifying = true;
         placedTile.add(first);
+        modifying = false;
         add(first);
     }
 
     public int[] getPositionOnBoard(int x, int y) {
-        return new int[]{(x - TileComponent.getReferencePositionX()) / TileComponent.DEFAULT_SIDE_LENGTH,
-                (y - TileComponent.getReferencePositionY()) / TileComponent.DEFAULT_SIDE_LENGTH};
+        double boardX = ((double) x - TileComponent.getReferencePositionX()) / TileComponent.DEFAULT_SIDE_LENGTH;
+        double boardY = ((double) y - TileComponent.getReferencePositionY()) / TileComponent.DEFAULT_SIDE_LENGTH;
+        int[] ints = {(int) Math.floor(boardX),
+                (int) Math.floor(boardY)};
+        return ints;
     }
 
     class BoardMouseActionHandler extends MouseAdapter {

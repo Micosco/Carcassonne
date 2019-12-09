@@ -1,10 +1,14 @@
 package com.mcsc.carcassonne.ui.gaming;
 
 import com.mcsc.carcassonne.board.BoardPosition;
+import com.mcsc.carcassonne.board.EdgeDirectionEnum;
+import com.mcsc.carcassonne.board.Meeple;
 import com.mcsc.carcassonne.board.Tile;
+import com.mcsc.carcassonne.event.gaming.MeeplePlaceListener;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 
 /**
  * @author White Wing
@@ -25,9 +29,11 @@ public class TileComponent extends JLabel {
         image = new ImageIcon(getClass().getResource("/textures/tile/" + managedTile.getExpansion()
                 + "/" + managedTile.getIdentifier() + ".jpg")).getImage();
         recalculatePosition();
+        addMouseListener(new MeeplePlaceListener());
     }
 
-    public TileComponent() {}
+    public TileComponent() {
+    }
 
     public void replaceTile(Tile tile) {
         managedTile = tile;
@@ -36,9 +42,42 @@ public class TileComponent extends JLabel {
         setIcon(new ImageIcon(image));
     }
 
+    private int getXOnTile(EdgeDirectionEnum position) {
+        return switch (position) {
+            case E -> 65;
+            case W -> 0;
+            default -> 33;
+        };
+    }
+
+    private int getYOnTile(EdgeDirectionEnum position) {
+        return switch (position) {
+            case N -> 0;
+            case S -> 65;
+            default -> 33;
+        };
+    }
+
+    private MeepleInfo getMeepleIcon() {
+        int index = -1;
+        for (int i = 0; i < managedTile.getMeeples().length; i++) {
+            if (managedTile.getMeeples()[i] != null) index = i;
+        }
+        if (index == -1) {
+            return new MeepleInfo();
+        }
+        Meeple meeple = managedTile.getMeeples()[index];
+        return new MeepleInfo(meeple.getBelongTo().getColor(), EdgeDirectionEnum.valueOf(index));
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        Graphics2D g2 = (Graphics2D) g;
+        MeepleInfo meeple = getMeepleIcon();
+        if (meeple.isEffective())
+            g2.drawImage(meeple.getImage().getImage(), getXOnTile(meeple.getPosition()),
+                    getYOnTile(meeple.getPosition()), null);
     }
 
     /**

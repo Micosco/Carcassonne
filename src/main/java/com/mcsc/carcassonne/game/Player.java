@@ -12,6 +12,7 @@ public class Player {
     public Player(String id, Color color) {
         this.id = id;
         this.color = color;
+        this.score = 0;
     }
 
     public String getId() {
@@ -24,6 +25,10 @@ public class Player {
 
     public Color getColor() {
         return color;
+    }
+
+    public void addScore(int score) {
+        this.score += score;
     }
 
     @Override

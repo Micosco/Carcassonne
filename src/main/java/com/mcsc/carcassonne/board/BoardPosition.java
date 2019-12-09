@@ -33,11 +33,15 @@ public class BoardPosition {
         }
     }
 
-
-
+    /**
+     * 获取与某一边缘相连通的边缘
+     * @param direction 要进行查找的边缘
+     * @return 连通的边缘
+     */
     public Map<EdgeDirectionEnum, BoardPosition> getAdjacentTiles(EdgeDirectionEnum direction) {
         Map<EdgeDirectionEnum, BoardPosition> adjacentPosition = new HashMap<>();
         for (int direct : tile.getLayer().getMatrix().getRow(direction.ordinal())) {
+            if (direct == 8) continue;
             EdgeDirectionEnum realDirection = EdgeDirectionEnum.valueOf((direct + tile.getRotation()) % 8);
             adjacentPosition.put(realDirection, parent.getPositionByDirection(this, realDirection));
         }
