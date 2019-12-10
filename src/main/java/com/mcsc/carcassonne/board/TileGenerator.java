@@ -122,4 +122,8 @@ public class TileGenerator {
     {
         return jsonObject.getJSONObject(name).getString("texturePath");
     }
+    public int getQuantity(String name)
+    {
+        return jsonObject.getJSONObject(name).getInt("quantity");
+    }
 }

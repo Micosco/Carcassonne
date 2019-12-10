@@ -31,21 +31,21 @@ public class Tile {
     private String expansion;
     private int identifier;
     private String name;
-    private String texturePath;
+    //private String texturePath;
     public Tile(String expansion,int identifier){
         this.identifier = identifier;
         this.expansion = expansion;
         this.name = expansion+identifier;
         TileGenerator reader = new TileGenerator(".\\src\\main\\resources\\cardInfo.json");
-        this.texturePath = reader.getTexturePath(name);
+        //this.texturePath = reader.getTexturePath(name);
         layer = new TileLayer(reader.isChurch(name),
                 reader.getEdgeTypeEnum(name),
                 reader.getAdjacencyMatrix(name));
     }
 
-    public String getTexturePath() {
-        return texturePath;
-    }
+    //public String getTexturePath() {
+    //    return texturePath;
+    //}
 
     @Override
     public String toString() {
@@ -56,7 +56,6 @@ public class Tile {
                 ", expansion='" + expansion + '\'' +
                 ", identifier=" + identifier +
                 ", name='" + name + '\'' +
-                ", texturePath='" + texturePath + '\'' +
                 '}';
     }
 }
