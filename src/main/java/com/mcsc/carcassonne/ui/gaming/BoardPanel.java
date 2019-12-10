@@ -1,9 +1,6 @@
 package com.mcsc.carcassonne.ui.gaming;
 
-import com.mcsc.carcassonne.board.Board;
-import com.mcsc.carcassonne.board.BoardPosition;
-import com.mcsc.carcassonne.board.Tile;
-import com.mcsc.carcassonne.board.TileStack;
+import com.mcsc.carcassonne.board.*;
 import com.mcsc.carcassonne.event.gaming.TilePlaceListener;
 import com.mcsc.carcassonne.game.GameState;
 
@@ -14,6 +11,8 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 /**
+ * 游玩区面板，用于显示桌面，已放置板块和米宝
+ *
  * @author White Wing
  */
 public class BoardPanel extends JPanel {
@@ -30,6 +29,13 @@ public class BoardPanel extends JPanel {
         realTimeRefresh();
     }
 
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.drawImage(new ImageIcon(getClass().getResource("/ui/Board Background.jpg")).getImage(),
+                -100, -100, null);
+    }
+
     public void placeTile(int x, int y) {
         Board board = GameState.getCurrentGameState().getBoard();
         Tile newTile = board.getTileStack().draw();
@@ -41,6 +47,9 @@ public class BoardPanel extends JPanel {
         comp.recalculatePosition();
     }
 
+    /**
+     * 保持板块的实时刷新
+     */
     private void realTimeRefresh() {
         Runnable refresh = () -> {
             while (true) {

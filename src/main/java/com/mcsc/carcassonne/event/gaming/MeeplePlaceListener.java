@@ -29,12 +29,8 @@ public class MeeplePlaceListener extends MouseAdapter {
             Board board = GameState.getCurrentGameState().getBoard();
             int x = e.getX();
             int y = e.getY();
-
             board.getLastPlaced().getTile().placeMeeple(getDirection(x, y));
-            Map<Player, Integer> scores = board.settleScore();
-            for(var player: GameState.getCurrentGameState().getPlayersList()) {
-                player.addScore(scores.getOrDefault(player, 0));
-            }
+            GameState.getCurrentGameState().startSummaryScore();
         }
     }
 

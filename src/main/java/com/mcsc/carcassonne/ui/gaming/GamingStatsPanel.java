@@ -1,6 +1,7 @@
 package com.mcsc.carcassonne.ui.gaming;
 
 import com.mcsc.carcassonne.game.GameState;
+import com.mcsc.carcassonne.game.RoundStagePointer;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
@@ -25,6 +26,13 @@ public class GamingStatsPanel extends JPanel {
         TileComponent previewTile = new TileComponent();
         previewTile.setPreferredSize(new Dimension(80, 80));
         add(previewTile);
+
+        JButton comp = new JButton("跳过放置米宝");
+        comp.addActionListener(e -> {
+            RoundStagePointer.getDefaultStagePointer().nextStage();
+            GameState.getCurrentGameState().startSummaryScore();
+        });
+        add(comp, "cell 0 7 3 1");
 
         Runnable resetPreviewImage = () -> {
             while (true) {

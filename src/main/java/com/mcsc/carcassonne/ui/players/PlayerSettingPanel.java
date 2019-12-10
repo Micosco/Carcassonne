@@ -61,7 +61,8 @@ public class PlayerSettingPanel extends JPanel {
         if (getEnabledPlayersInfo().size() > 0) {
             GameState.initialNewGame();
             MainFrame.getMainWindow().switchPanel("Gaming");
-            GamingPanel.getPanel().initial();
+            GamingPanel panel = GamingPanel.getPanel().initial();
+            GameState.getCurrentGameState().setGamingPanel(panel);
         } else {
             JOptionPane.showMessageDialog(null, "请添加至少一个玩家");
         }

@@ -3,6 +3,7 @@ package com.mcsc.carcassonne.game;
 
 import com.mcsc.carcassonne.board.Board;
 import com.mcsc.carcassonne.board.TileStack;
+import com.mcsc.carcassonne.ui.gaming.GamingPanel;
 import com.mcsc.carcassonne.ui.players.PlayerInfo;
 import com.mcsc.carcassonne.ui.players.PlayerSettingPanel;
 
@@ -20,6 +21,7 @@ public class GameState {
     private Player currentPlayer;
     private Board board;
     private Map<ExpansionEnum, Boolean> expansions;
+    private GamingPanel gamingPanel;
     private static GameState currentGameState;
 
     public GameState() {
@@ -44,6 +46,29 @@ public class GameState {
             this.players.add(new Player(player.getID(), player.getColorState().getColor()));
         }
         currentPlayer = this.players.get(0);
+    }
+
+    /**
+     * 在分数结算阶段进行分数结算
+     */
+    public void startSummaryScore() {
+        if (RoundStagePointer.getDefaultStagePointer().getCurrentStage() == RoundStage.SCORE_SUMMARY) {
+            Board board = GameState.getCurrentGameState().getBoard();
+            Map<Player, Integer> scores = board.settleScore();
+            for (var player : GameState.getCurrentGameState().getPlayersList()) {
+                player.addScore(scores.getOrDefault(player, 0));
+            }
+            gamingPanel.repaint();
+        }
+
+    }
+
+    public GamingPanel getGamingPanel() {
+        return gamingPanel;
+    }
+
+    public void setGamingPanel(GamingPanel gamingPanel) {
+        this.gamingPanel = gamingPanel;
     }
 
     public static GameState getCurrentGameState() {

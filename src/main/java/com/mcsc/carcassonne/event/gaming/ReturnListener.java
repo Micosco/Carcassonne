@@ -1,5 +1,7 @@
 package com.mcsc.carcassonne.event.gaming;
 
+import com.mcsc.carcassonne.board.Board;
+import com.mcsc.carcassonne.game.GameState;
 import com.mcsc.carcassonne.ui.MainFrame;
 
 import javax.swing.*;
@@ -16,5 +18,6 @@ public class ReturnListener implements ActionListener {
         if (result == JOptionPane.YES_OPTION) {
             MainFrame.getMainWindow().switchPanel("MainMenu");
         }
+
     }
 }
