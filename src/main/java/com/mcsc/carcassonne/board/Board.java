@@ -94,14 +94,16 @@ public class Board {
 
         for (int i = 0; i < 8; i += 2) {
             int score = 0;
-            Set<BoardPosition> visitedPositions = new HashSet<>();
+            HashSet<BoardPosition> visitedPositions = new HashSet<>();
             if (lastPlaced.getTile().getLayer().getEdges()[i] == EdgeTypeEnum.CITY) {
                 score = summary(EdgeDirectionEnum.valueOf(i), lastPlaced, effectiveDirection, visitedPositions, 2,
                         EdgeTypeEnum.CITY);
             } else if (lastPlaced.getTile().getLayer().getEdges()[i] == EdgeTypeEnum.ROAD) {
                 score = summary(EdgeDirectionEnum.valueOf(i), lastPlaced, effectiveDirection, visitedPositions, 1,
-                        EdgeTypeEnum.ROAD);
+                        EdgeTypeEnum.ROAD) ;
             }
+            score = Math.max(score, 0);
+            if (score > 0) clearMeeples(visitedPositions);
             Meeple meeple = lastPlaced.getTile().getMeeples()[i];
             if (meeple != null)
                 scores.put(meeple.getBelongTo(), score + scores.getOrDefault(meeple.getBelongTo(), 0));
@@ -141,7 +143,8 @@ public class Board {
         if (startPosition.getTile().getLayer().getEdges()[startEdge.ordinal()] != type)
             return Integer.MIN_VALUE;
         //每个板块得分
-        int score = weight;
+        visitedPositions.add(startPosition);
+        int totalScore = weight;
         //获取与当前位置联通的板块
         Map<EdgeDirectionEnum, BoardPosition> adjacentPositions = startPosition.getAdjacentTiles(startEdge);
         //获取需要访问的板块
@@ -149,10 +152,18 @@ public class Board {
                 .filter(e -> !visitedPositions.contains(adjacentPositions.get(e))).collect(Collectors.toSet());
         //访问并计算分数
         for (var direct : needVisit) {
-            visitedPositions.add(adjacentPositions.get(direct));
-            score += summary(EdgeDirectionEnum.valueOf((direct.ordinal() + 4) % 8), adjacentPositions.get(direct), effectiveDirection, visitedPositions, weight, type);
+          //  visitedPositions.add(adjacentPositions.get(direct));
+            int score = summary(EdgeDirectionEnum.valueOf((direct.ordinal() + 4) % 8),
+                    adjacentPositions.get(direct), effectiveDirection, visitedPositions, weight, type);
+            if (score < 0) totalScore = Integer.MIN_VALUE;
         }
-        return score;
+        return totalScore;
+    }
+
+    private void clearMeeples(Set<BoardPosition> visitedPositions) {
+        for (var pos : visitedPositions){
+            pos.getTile().clearMeeple();
+        }
     }
 
     public BoardPosition getLastPlaced() {

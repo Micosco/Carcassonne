@@ -5,29 +5,31 @@ import com.mcsc.carcassonne.game.Player;
 import com.mcsc.carcassonne.game.RoundStagePointer;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 游玩时所使用的板块
- *
+ * <p>
  * {@code identifier} 表示该板块的编号， GUI通过该编号决定要显示的卡图
  * {@code expansion} 表示该板块所属的扩展包
  */
 
 public class Tile {
-    Meeple[] meeples;
+    private Meeple[] meeples;
     private TileLayer layer;
     private int rotation;
     private String expansion;
     private int identifier;
     private String name;
     private String texturePath;
-    public Tile(String expansion,int identifier){
+
+    public Tile(String expansion, int identifier) {
         this.identifier = identifier;
         this.expansion = expansion;
-        this.name = expansion+identifier;
+        this.name = expansion + identifier;
         TileGenerator reader = new TileGenerator(".\\src\\main\\resources\\cardInfo.json");
-        this.texturePath = reader.getTexturePath(name);
         layer = new TileLayer(reader.isChurch(name),
                 reader.getEdgeTypeEnum(name),
                 reader.getAdjacencyMatrix(name));
@@ -45,6 +47,19 @@ public class Tile {
         return newMeeple;
     }
 
+    public void rotateClockWise() {
+        rotation += 1;
+        rotation %= 4;
+    }
+
+    public void rotateCounterClockWise() {
+        rotation -= 1;
+        rotation %= 4;
+    }
+
+    public void clearMeeple() {
+        meeples = new Meeple[9];
+    }
 
     public Meeple[] getMeeples() {
         return meeples;

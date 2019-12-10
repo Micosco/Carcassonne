@@ -27,7 +27,7 @@ public class TileComponent extends JLabel {
         tilePosition = position;
         managedTile = position.getTile();
         image = new ImageIcon(getClass().getResource("/textures/tile/" + managedTile.getExpansion()
-                + "/" + managedTile.getIdentifier() + ".jpg")).getImage();
+                + "/" + managedTile.getIdentifier() + "/" + "r0.jpg")).getImage();
         recalculatePosition();
         addMouseListener(new MeeplePlaceListener());
     }
@@ -37,9 +37,9 @@ public class TileComponent extends JLabel {
 
     public void replaceTile(Tile tile) {
         managedTile = tile;
-        image = new ImageIcon(getClass().getResource("/textures/tile/" + managedTile.getExpansion()
-                + "/" + managedTile.getIdentifier() + ".jpg")).getImage();
-        setIcon(new ImageIcon(image));
+        // image = new ImageIcon(getClass().getResource("/textures/tile/" + managedTile.getExpansion()
+        //        + "/" + managedTile.getIdentifier() + "/r0.jpg")).getImage();
+        setIcon(new ImageIcon(getClass().getResource(getImagePath())));
     }
 
     private int getXOnTile(EdgeDirectionEnum position) {
@@ -80,6 +80,10 @@ public class TileComponent extends JLabel {
                     getYOnTile(meeple.getPosition()), null);
     }
 
+    private String getImagePath() {
+        return "/textures/tile/" + managedTile.getExpansion() + "/" + managedTile.getIdentifier() + "/r" + managedTile.getRotation() + ".jpg";
+    }
+
     /**
      * 移动镜头位置后重新计算元件位置
      */
@@ -88,7 +92,7 @@ public class TileComponent extends JLabel {
         int y = (int) (tilePosition.getY() * DEFAULT_SIDE_LENGTH * zoomRatio) + referencePositionY;
         int sideLength = (int) (DEFAULT_SIDE_LENGTH * zoomRatio);
         setBounds(x, y, sideLength, sideLength);
-        setIcon(new ImageIcon(image));
+        setIcon(new ImageIcon(getClass().getResource(getImagePath())));
     }
 
     public static void setReferencePosition(int x, int y) {

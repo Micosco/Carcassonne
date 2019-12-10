@@ -42,8 +42,8 @@ public class BoardPosition {
         Map<EdgeDirectionEnum, BoardPosition> adjacentPosition = new HashMap<>();
         for (int direct : tile.getLayer().getMatrix().getRow(direction.ordinal())) {
             if (direct == 8) continue;
-            EdgeDirectionEnum realDirection = EdgeDirectionEnum.valueOf((direct + tile.getRotation()) % 8);
-            adjacentPosition.put(realDirection, parent.getPositionByDirection(this, realDirection));
+                EdgeDirectionEnum realDirection = EdgeDirectionEnum.valueOf((direct + tile.getRotation()) % 8);
+                adjacentPosition.put(realDirection, parent.getPositionByDirection(this, realDirection));
         }
         return adjacentPosition;
     }
@@ -58,5 +58,13 @@ public class BoardPosition {
 
     public Tile getTile() {
         return tile;
+    }
+
+    @Override
+    public String toString() {
+        return "BoardPosition{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
     }
 }

@@ -6,6 +6,7 @@ import com.mcsc.carcassonne.game.RoundStage;
 import com.mcsc.carcassonne.game.RoundStagePointer;
 import com.mcsc.carcassonne.ui.gaming.BoardPanel;
 
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -18,11 +19,14 @@ public class TilePlaceListener extends MouseAdapter {
      */
     @Override
     public void mouseClicked(MouseEvent e) {
-        if (RoundStagePointer.getDefaultStagePointer().getCurrentStage() == RoundStage.PLACE_TILE) {
+        if (e.getButton() == MouseEvent.BUTTON1 && RoundStagePointer.getDefaultStagePointer().getCurrentStage() == RoundStage.PLACE_TILE) {
             BoardPanel source = (BoardPanel) e.getSource();
             int x = source.getPositionOnBoard(e.getX(), e.getY())[0];
             int y = source.getPositionOnBoard(e.getX(), e.getY())[1];
             source.placeTile(x, y);
+        } else if (e.getButton() == MouseEvent.BUTTON3) {
+            GameState.getCurrentGameState().getBoard().getTileStack().top().rotateClockWise();
         }
     }
 }
+
