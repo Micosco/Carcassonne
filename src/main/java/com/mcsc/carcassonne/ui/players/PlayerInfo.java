@@ -16,8 +16,11 @@ public class PlayerInfo extends JPanel {
 
     public PlayerInfo() {
         setPreferredSize(new Dimension(600,80));
+        setBackground(Color.WHITE);
+        setOpaque(false);
         setLayout(new FlowLayout());
         enableBox = new JCheckBox();
+        enableBox.setOpaque(false);
         enableBox.addChangeListener(new PlayerEnableListener());
         add(enableBox);
         color = new PlayerColor();

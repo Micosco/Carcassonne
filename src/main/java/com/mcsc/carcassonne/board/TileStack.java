@@ -12,7 +12,7 @@ import java.util.Stack;
 public class TileStack {
     private Stack<Tile> tileStack;
     private ArrayList<Tile> tileArrayList;
-
+    private static Tile OriginTile;
     public boolean isEmpty() {
         return tileStack.empty();
     }
@@ -21,23 +21,40 @@ public class TileStack {
         return tileStack.pop();
     }
 
-    public TileStack(String expansionName) throws IOException {
-        int num = new TileGenerator(".\\src\\main\\resources\\cardInfo.json").getTotalTileNum(expansionName);
+    public Tile top() {
+        return tileStack.peek();
+    }
+
+    public TileStack(String expansionName){
+        String filePath = ".\\src\\main\\resources\\cardInfo.json";
+        int num = new TileGenerator(filePath).getTotalTileNum(expansionName);
         ArrayList<Tile> tileArrayList = new ArrayList<>();
         tileStack = new Stack<>();
+        OriginTile = new Tile("base",0);
         for (int i = 0; i < num; i++) {
-            Tile tile = new Tile(expansionName,i);
-            tileArrayList.add(tile);
+            String TileName = expansionName + String.valueOf(i);
+            for (int j = 0; j < (new TileGenerator(filePath).getQuantity(TileName)); j++) {
+                Tile tile = new Tile(expansionName,i);
+                tileArrayList.add(tile);
+            }
         }
         Collections.shuffle(tileArrayList);
-        for (int i = 0; i < num; i++) {
-            tileStack.push(tileArrayList.get(i));
+        for (Tile tile : tileArrayList) {
+            tileStack.push(tile);
         }
+    }
+
+    public static Tile getOriginTile() {
+        return OriginTile;
     }
 
     @Override
     public String toString() {
-        return "TileStack{" +
+        return getStackDepth() + "TileStack{" +
                 "tileStack=" + tileStack;
+    }
+    public int getStackDepth()
+    {
+        return tileStack.size();
     }
 }

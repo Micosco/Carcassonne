@@ -15,7 +15,7 @@ import java.util.Arrays;
 
 public class TileLayer {
     private EdgeTypeEnum[] edges;
-    private AdjacencyMatrix unicom;
+    private AdjacencyMatrix matrix;
     private boolean isChurch;
     /*
     public TileLayer(EdgeTypeEnum... edges) {
@@ -23,18 +23,30 @@ public class TileLayer {
             throw new IllegalArgumentException("传入的边缘数不匹配");
         }
     }*/
-    public TileLayer(boolean isChurch, EdgeTypeEnum[] edges,AdjacencyMatrix unicom)
+    public TileLayer(boolean isChurch, EdgeTypeEnum[] edges,AdjacencyMatrix matrix)
     {
         this.isChurch = isChurch;
         this.edges = edges;
-        this.unicom = unicom;
+        this.matrix = matrix;
+    }
+
+    public EdgeTypeEnum[] getEdges() {
+        return edges;
+    }
+
+    public boolean isChurch() {
+        return isChurch;
+    }
+
+    public AdjacencyMatrix getMatrix() {
+        return matrix;
     }
 
     @Override
     public String toString() {
         return "TileLayer{" +
                 "edges=" + Arrays.toString(edges) +
-                ", unicom=" + unicom +
+                ", unicom=" + matrix +
                 ", isChurch=" + isChurch +
                 '}';
     }

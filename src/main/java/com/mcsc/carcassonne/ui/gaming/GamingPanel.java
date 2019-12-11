@@ -27,16 +27,18 @@ public class GamingPanel extends JPanel {
     /**
      * 每次新建游戏时调用，更新{@code GameStatePanel}，{@code BoardPanel}和{@code ReturnButton}
      */
-    public void initial() {
+    public GamingPanel initial() {
         remove(gamingStatePanel);
         remove(boardPanel);
         remove(returnButton);
         gamingStatePanel = new GamingStatsPanel();
         boardPanel = new BoardPanel();
+        boardPanel.placeFirstTile();
         returnButton = new ReturnButton();
         add(gamingStatePanel, "cell 0 0 3 8");
         add(boardPanel, "cell 3 0 13 9");
         add(returnButton, "cell 0 8 3 1");
+        return this;
     }
 
     public static GamingPanel getPanel() {

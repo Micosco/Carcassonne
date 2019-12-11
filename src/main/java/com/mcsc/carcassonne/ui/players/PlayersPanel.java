@@ -11,16 +11,23 @@ import java.util.ArrayList;
 public class PlayersPanel extends JPanel {
     public static PlayersPanel panel = new PlayersPanel();
     private ArrayList<PlayerInfo> players;
+    private JLabel background = new JLabel();
 
     private PlayersPanel() {
+        initialPanel();
+    }
+
+    private void initialPanel() {
         setPreferredSize(new Dimension(1280, 720));
         //使PlayerInfo竖直排列
         ((FlowLayout) getLayout()).setHgap(1000);
 
+        //添加可用玩家
         players = new ArrayList<>();
         for (int i = 0; i < PlayerColor.getMaxPlayerNum(); i++) {
             players.add(new PlayerInfo());
         }
+
         for (var player : players) {
             add(player);
         }

@@ -13,9 +13,9 @@ import java.awt.event.ActionListener;
 public class GameStartListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
-        //TODO 补全游戏数据初始化
         GameState.initialNewGame();
         MainFrame.getMainWindow().switchPanel("Gaming");
-        GamingPanel.getPanel().initial();
+        GamingPanel panel = GamingPanel.getPanel().initial();
+        GameState.getCurrentGameState().setGamingPanel(panel);
     }
 }
