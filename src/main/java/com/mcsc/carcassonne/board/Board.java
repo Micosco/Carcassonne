@@ -143,8 +143,8 @@ public class Board {
         if (startPosition.getTile().getLayer().getEdges()[startEdge.ordinal()] != type)
             return Integer.MIN_VALUE;
         //每个板块得分
-        visitedPositions.add(startPosition);
         int totalScore = weight;
+        visitedPositions.add(startPosition);
         //获取与当前位置联通的板块
         Map<EdgeDirectionEnum, BoardPosition> adjacentPositions = startPosition.getAdjacentTiles(startEdge);
         //获取需要访问的板块
