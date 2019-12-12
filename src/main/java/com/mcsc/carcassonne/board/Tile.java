@@ -24,9 +24,7 @@ public class Tile {
         this.identifier = identifier;
         this.expansion = expansion;
         this.name = expansion + identifier;
-        URL url = getClass().getResource("/cardInfo.json");
-        String filePath = url.getPath();
-        TileGenerator reader = new TileGenerator(filePath);
+        TileGenerator reader = new TileGenerator();
         layer = new TileLayer(reader.isChurch(name),
                 reader.getEdgeTypeEnum(name),
                 reader.getAdjacencyMatrix(name));

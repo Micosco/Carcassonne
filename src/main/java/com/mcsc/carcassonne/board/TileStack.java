@@ -28,15 +28,13 @@ public class TileStack {
     }
 
     public TileStack(String expansionName){
-        URL url = getClass().getResource("/cardInfo.json");
-        this.filePath = url.getPath();
-        int num = new TileGenerator(filePath).getTotalTileNum(expansionName);
+        int num = new TileGenerator().getTotalTileNum(expansionName);
         ArrayList<Tile> tileArrayList = new ArrayList<>();
         tileStack = new Stack<>();
         OriginTile = new Tile("base",0);
         for (int i = 0; i < num; i++) {
             String TileName = expansionName + String.valueOf(i);
-            for (int j = 0; j < (new TileGenerator(filePath).getQuantity(TileName)); j++) {
+            for (int j = 0; j < (new TileGenerator().getQuantity(TileName)); j++) {
                 Tile tile = new Tile(expansionName,i);
                 tileArrayList.add(tile);
             }

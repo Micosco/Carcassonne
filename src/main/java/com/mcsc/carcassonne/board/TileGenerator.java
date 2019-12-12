@@ -2,6 +2,7 @@ package com.mcsc.carcassonne.board;
 
 import com.mcsc.carcassonne.utility.AdjacencyMatrix;
 import org.json.*;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,14 +25,16 @@ public class TileGenerator {
 
     /**
      * 构造方法
+     *
      * @param filePath ,传入文件相对路径。
      * @value 文件路径，用于初始化对象时存入读取文件的相对路径。
      */
-    public TileGenerator(String filePath){
+    public TileGenerator(String filePath) {
         this.filePath = filePath;
         try {
-            FileReader fileReader = new FileReader(new File(filePath));
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
+//            FileReader fileReader = new FileReader(new File(filePath));
+            InputStream is = getClass().getResourceAsStream(filePath);
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is));
             this.fileStr = new StringBuilder();
             String tempStr = bufferedReader.readLine();
             while (tempStr != null) {
@@ -46,13 +49,18 @@ public class TileGenerator {
         this.jsonObject = new JSONObject(fileStr.toString());
         //该jsonObject对象存储了格式化过的json文件内容。
     }
-    private boolean boolAdjacency(Object matrix)
-    {
+
+    public TileGenerator() {
+        this("/cardInfo.json");
+    }
+
+    private boolean boolAdjacency(Object matrix) {
         boolean value = false;
-        if(matrix.equals(1))
+        if (matrix.equals(1))
             value = true;
         return value;
     }
+
     private AdjacencyMatrix convertToAdjacencyMatrix(Object[][] formerMatrix) {
         AdjacencyMatrix adjacencyMatrix = new AdjacencyMatrix(formerMatrix.length, formerMatrix.length);
         for (int i = 0; i < formerMatrix.length; i++) {
@@ -63,7 +71,7 @@ public class TileGenerator {
         return adjacencyMatrix;
     }
 
-    public AdjacencyMatrix getAdjacencyMatrix(String name){
+    public AdjacencyMatrix getAdjacencyMatrix(String name) {
         JSONArray jsonArray = jsonObject.getJSONObject(name).getJSONArray("AdjacencyMatrix");
         //解析fileStr字符串，将邻接矩阵读入jsonArray中
         Object[][] adjacencyMatrix = new Object[jsonArray.length()][jsonArray.length()];
@@ -113,14 +121,14 @@ public class TileGenerator {
     public String getExpansionName(String name) {
         return jsonObject.getJSONObject(name).getString("expansion");
     }
+
     public int getTotalTileNum(String expansion) {
         String name = expansion + "TileNum";
         return jsonObject.getInt(name);
     }
 
 
-    public int getQuantity(String name)
-    {
+    public int getQuantity(String name) {
         return jsonObject.getJSONObject(name).getInt("quantity");
     }
 }
