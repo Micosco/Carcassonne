@@ -1,13 +1,8 @@
 package com.mcsc.carcassonne.board;
 
 import com.mcsc.carcassonne.game.GameState;
-import com.mcsc.carcassonne.game.Player;
-import com.mcsc.carcassonne.game.RoundStagePointer;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.net.URL;
 
 /**
  * 游玩时所使用的板块
@@ -17,52 +12,49 @@ import java.util.Map;
  */
 
 public class Tile {
-    private Meeple[] meeples;
+    private Meeple meeple;
+    private EdgeDirectionEnum meeplePosition;
     private TileLayer layer;
     private int rotation;
     private String expansion;
     private int identifier;
     private String name;
-    private String texturePath;
 
     public Tile(String expansion, int identifier) {
         this.identifier = identifier;
         this.expansion = expansion;
         this.name = expansion + identifier;
-        TileGenerator reader = new TileGenerator(".\\src\\main\\resources\\cardInfo.json");
+        URL url = getClass().getResource("/cardInfo.json");
+        String filePath = url.getPath();
+        TileGenerator reader = new TileGenerator(filePath);
         layer = new TileLayer(reader.isChurch(name),
                 reader.getEdgeTypeEnum(name),
                 reader.getAdjacencyMatrix(name));
-        meeples = new Meeple[9];
     }
 
-    public Meeple placeMeeple(EdgeDirectionEnum direction) {
-        int realDirection = direction.ordinal() - rotation;
-        if (realDirection < 0) realDirection += 8;
-        Meeple newMeeple = new Meeple(GameState.getCurrentGameState().getCurrentPlayer());
-        if (direction == EdgeDirectionEnum.END) meeples[8] = newMeeple;
-        else meeples[realDirection % 8] = newMeeple;
-        RoundStagePointer.getDefaultStagePointer().nextStage();
-
-        return newMeeple;
+    public void placeMeeple(EdgeDirectionEnum direction) {
+        meeplePosition = direction;
+        meeple = new Meeple(GameState.getCurrentGameState().getCurrentPlayer());
     }
 
     public void rotateClockWise() {
-        rotation += 1;
-        rotation %= 4;
+        layer.shiftEdges();
+        layer.shiftMatrix();
+        rotation += 2;
+        rotation %= 8;
     }
 
-    public void rotateCounterClockWise() {
-        rotation -= 1;
-        rotation %= 4;
-    }
 
     public void clearMeeple() {
-        meeples = new Meeple[9];
+        meeple = null;
     }
 
-    public Meeple[] getMeeples() {
-        return meeples;
+    public EdgeDirectionEnum getMeeplePosition() {
+        return meeplePosition;
+    }
+
+    public Meeple getMeeple() {
+        return meeple;
     }
 
     public int getIdentifier() {
@@ -81,6 +73,10 @@ public class Tile {
         return layer;
     }
 
+    public EdgeTypeEnum getEdge(EdgeDirectionEnum direction) {
+        return layer.getEdges()[direction.ordinal()];
+    }
+
     public int getRotation() {
         return rotation;
     }
@@ -88,13 +84,11 @@ public class Tile {
     @Override
     public String toString() {
         return "Tile{" +
-                "meeples=" + meeples +
                 ", layer=" + layer +
                 ", rotation=" + rotation +
                 ", expansion='" + expansion + '\'' +
                 ", identifier=" + identifier +
                 ", name='" + name + '\'' +
-                ", texturePath='" + texturePath + '\'' +
                 '}';
     }
 }

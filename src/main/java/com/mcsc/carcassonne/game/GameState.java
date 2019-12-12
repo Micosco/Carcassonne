@@ -60,7 +60,6 @@ public class GameState {
             }
             gamingPanel.repaint();
         }
-
     }
 
     public GamingPanel getGamingPanel() {

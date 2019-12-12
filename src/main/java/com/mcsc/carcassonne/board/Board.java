@@ -1,11 +1,9 @@
 package com.mcsc.carcassonne.board;
 
-import com.mcsc.carcassonne.game.GameState;
 import com.mcsc.carcassonne.game.Player;
 import com.mcsc.carcassonne.game.RoundStagePointer;
 
 import java.util.*;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 /**
@@ -92,21 +90,31 @@ public class Board {
             }
         }
 
-        for (int i = 0; i < 8; i += 2) {
-            int score = 0;
-            HashSet<BoardPosition> visitedPositions = new HashSet<>();
-            if (lastPlaced.getTile().getLayer().getEdges()[i] == EdgeTypeEnum.CITY) {
-                score = summary(EdgeDirectionEnum.valueOf(i), lastPlaced, effectiveDirection, visitedPositions, 2,
-                        EdgeTypeEnum.CITY);
-            } else if (lastPlaced.getTile().getLayer().getEdges()[i] == EdgeTypeEnum.ROAD) {
-                score = summary(EdgeDirectionEnum.valueOf(i), lastPlaced, effectiveDirection, visitedPositions, 1,
-                        EdgeTypeEnum.ROAD) ;
+        for (int i = 0; i < 8; i++) {
+            ScoreInfo score = new ScoreInfo();
+            Set<BoardPosition> visited = new HashSet<>();
+
+            Tile lastTile = lastPlaced.getTile();
+            if (lastTile.getEdge(EdgeDirectionEnum.valueOf(i)) == EdgeTypeEnum.CITY) {
+                summary(EdgeDirectionEnum.valueOf(i), lastPlaced, effectiveDirection, visited, 2, EdgeTypeEnum.CITY,
+                        score);
+            } else if (lastTile.getEdge(EdgeDirectionEnum.valueOf(i)) == EdgeTypeEnum.ROAD) {
+                summary(EdgeDirectionEnum.valueOf(i), lastPlaced, effectiveDirection, visited, 1, EdgeTypeEnum.CITY,
+                        score);
             }
-            score = Math.max(score, 0);
-            if (score > 0) clearMeeples(visitedPositions);
-            Meeple meeple = lastPlaced.getTile().getMeeples()[i];
-            if (meeple != null)
-                scores.put(meeple.getBelongTo(), score + scores.getOrDefault(meeple.getBelongTo(), 0));
+
+            if (!score.isNoScore()) {
+                for (var player : score.getMeeplesCount().keySet()) {
+                    scores.put(player,
+                            score.getScore() * score.getMeeplesCount().get(player)
+                                    + scores.getOrDefault(player, 0));
+                }
+                if (score.getScore() > 0) {
+                    for (var pos : visited) {
+                        pos.getTile().clearMeeple();
+                    }
+                }
+            }
         }
 
         RoundStagePointer.getDefaultStagePointer().nextStage();
@@ -118,11 +126,16 @@ public class Board {
         //将矩阵下标修正为坐标
         int offset = boardSize / 2;
         switch (direction) {
-            case N -> {return board[startPosition.getX() + offset][startPosition.getY() - 1 + offset];}
-            case S -> {return board[startPosition.getX() + offset][startPosition.getY() + 1 + offset];}
-            case E -> {return board[startPosition.getX() + 1 + offset][startPosition.getY() + offset];}
-            case W -> {return board[startPosition.getX() - 1 + offset][startPosition.getY() + offset];}
-            default -> {return startPosition;}
+            case N:
+                return board[startPosition.getX() + offset][startPosition.getY() - 1 + offset];
+            case S:
+                return board[startPosition.getX() + offset][startPosition.getY() + 1 + offset];
+            case E:
+                return board[startPosition.getX() + 1 + offset][startPosition.getY() + offset];
+            case W:
+                return board[startPosition.getX() - 1 + offset][startPosition.getY() + offset];
+            default:
+                return startPosition;
         }
     }
 
@@ -134,34 +147,45 @@ public class Board {
      * @param effectiveDirection 有效的方向
      * @param visitedPositions   访问过的板块
      * @param weight             每个板块得分
-     * @return 路的得分，负数表示路未完成
+     * @param result             得分
      */
-    private int summary(EdgeDirectionEnum startEdge, BoardPosition startPosition,
-                        Set<EdgeDirectionEnum> effectiveDirection,
-                        Set<BoardPosition> visitedPositions, int weight, EdgeTypeEnum type) {
-        if (startPosition.getTile() == null) return Integer.MIN_VALUE;
-        if (startPosition.getTile().getLayer().getEdges()[startEdge.ordinal()] != type)
-            return Integer.MIN_VALUE;
-        //每个板块得分
-        int totalScore = weight;
-        visitedPositions.add(startPosition);
-        //获取与当前位置联通的板块
-        Map<EdgeDirectionEnum, BoardPosition> adjacentPositions = startPosition.getAdjacentTiles(startEdge);
-        //获取需要访问的板块
-        Set<EdgeDirectionEnum> needVisit = adjacentPositions.keySet().stream().filter(effectiveDirection::contains)
-                .filter(e -> !visitedPositions.contains(adjacentPositions.get(e))).collect(Collectors.toSet());
-        //访问并计算分数
-        for (var direct : needVisit) {
-          //  visitedPositions.add(adjacentPositions.get(direct));
-            int score = summary(EdgeDirectionEnum.valueOf((direct.ordinal() + 4) % 8),
-                    adjacentPositions.get(direct), effectiveDirection, visitedPositions, weight, type);
-            if (score < 0) totalScore = Integer.MIN_VALUE;
+    private void summary(EdgeDirectionEnum startEdge, BoardPosition startPosition,
+                         Set<EdgeDirectionEnum> effectiveDirection,
+                         Set<BoardPosition> visitedPositions, int weight, EdgeTypeEnum type, ScoreInfo result) {
+        if (startPosition.getTile() == null) {
+            result.setNoScore(true);
+            return;
         }
-        return totalScore;
+        if (startPosition.getTile().getEdge(startEdge) != type) {
+            result.setNoScore(true);
+            return;
+        }
+
+        //当前板块分数结算
+        visitedPositions.add(startPosition);
+        result.addScore(weight);
+
+        //当前板块米宝统计
+        Meeple meeple = startPosition.getTile().getMeeple();
+        if (meeple != null)
+            result.addMeepleCount(meeple.getBelongTo());
+
+        var adjacentTiles = startPosition.getAdjacentTiles(startEdge);
+
+        //获取需要访问的方向
+        Set<EdgeDirectionEnum> needVisit =
+                adjacentTiles.keySet().stream().filter(effectiveDirection::contains)
+                        .filter(e -> !visitedPositions.contains(adjacentTiles.get(e)))
+                        .collect(Collectors.toSet());
+
+        //DFS遍历
+        for (var direct : needVisit) {
+            summary(direct, adjacentTiles.get(direct), effectiveDirection, visitedPositions, weight, type, result);
+        }
     }
 
     private void clearMeeples(Set<BoardPosition> visitedPositions) {
-        for (var pos : visitedPositions){
+        for (var pos : visitedPositions) {
             pos.getTile().clearMeeple();
         }
     }

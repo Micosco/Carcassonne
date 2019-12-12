@@ -1,7 +1,9 @@
 package com.mcsc.carcassonne.board;
 
 import com.mcsc.carcassonne.utility.AdjacencyMatrix;
+import com.mcsc.carcassonne.utility.Shifter;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 
@@ -17,18 +19,48 @@ public class TileLayer {
     private EdgeTypeEnum[] edges;
     private AdjacencyMatrix matrix;
     private boolean isChurch;
+
     /*
     public TileLayer(EdgeTypeEnum... edges) {
         if (edges.length != this.edges.length) {
             throw new IllegalArgumentException("传入的边缘数不匹配");
         }
     }*/
-    public TileLayer(boolean isChurch, EdgeTypeEnum[] edges,AdjacencyMatrix matrix)
-    {
+    public TileLayer(boolean isChurch, EdgeTypeEnum[] edges, AdjacencyMatrix matrix) {
         this.isChurch = isChurch;
         this.edges = edges;
         this.matrix = matrix;
     }
+
+    public void shiftEdges() {
+        edges = Shifter.shiftArrayRight(new ArrayList<>(Arrays.asList(edges)), 2).toArray(new EdgeTypeEnum[0]);
+    }
+
+    public void shiftMatrix() {
+        final int SHIFT_LENGTH = 2;
+        final int lastIndex = edges.length - 1;
+
+        boolean[] lastLine = matrix.getRowArray(lastIndex);
+        boolean[] lastColumn = matrix.getColumnArray(lastIndex);
+        lastLine = Shifter.shiftArrayRight(lastLine, 2);
+        lastColumn = Shifter.shiftArrayRight(lastColumn, 2);
+
+        for (int i = 0; i < SHIFT_LENGTH; i++) {
+            for (int j = 1; j < edges.length; j++) {
+                for (int k = 1; k < edges.length; k++) {
+                    matrix.setAdjacent(j, k, matrix.isAdjacent(j - 1, k - 1));
+                }
+            }
+        }
+
+        matrix.setRow(0, lastLine);
+        matrix.setColumn(0, lastColumn);
+
+        //移位表示道路尽头的行
+        matrix.setRow(8, Shifter.shiftArrayRight(matrix.getRowArray(8), 2));
+        matrix.setColumn(8, Shifter.shiftArrayRight(matrix.getColumnArray(8), 2));
+    }
+
 
     public EdgeTypeEnum[] getEdges() {
         return edges;

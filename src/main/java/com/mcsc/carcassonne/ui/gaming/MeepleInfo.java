@@ -30,6 +30,9 @@ public class MeepleInfo {
         effective = true;
     }
 
+    /**
+     * 当米宝不存在时防止nullPointer
+     */
     public MeepleInfo() {
     }
 

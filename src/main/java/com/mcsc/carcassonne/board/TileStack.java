@@ -1,6 +1,7 @@
 package com.mcsc.carcassonne.board;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Stack;
@@ -13,6 +14,7 @@ public class TileStack {
     private Stack<Tile> tileStack;
     private ArrayList<Tile> tileArrayList;
     private static Tile OriginTile;
+    private String filePath;
     public boolean isEmpty() {
         return tileStack.empty();
     }
@@ -26,7 +28,8 @@ public class TileStack {
     }
 
     public TileStack(String expansionName){
-        String filePath = ".\\src\\main\\resources\\cardInfo.json";
+        URL url = getClass().getResource("/cardInfo.json");
+        this.filePath = url.getPath();
         int num = new TileGenerator(filePath).getTotalTileNum(expansionName);
         ArrayList<Tile> tileArrayList = new ArrayList<>();
         tileStack = new Stack<>();

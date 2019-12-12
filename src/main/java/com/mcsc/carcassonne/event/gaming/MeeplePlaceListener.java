@@ -30,6 +30,8 @@ public class MeeplePlaceListener extends MouseAdapter {
             int x = e.getX();
             int y = e.getY();
             board.getLastPlaced().getTile().placeMeeple(getDirection(x, y));
+            RoundStagePointer.getDefaultStagePointer().nextStage();
+
             GameState.getCurrentGameState().startSummaryScore();
         }
     }

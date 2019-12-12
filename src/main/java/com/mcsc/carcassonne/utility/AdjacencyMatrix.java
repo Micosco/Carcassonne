@@ -43,6 +43,28 @@ public class AdjacencyMatrix {
         return isSquare && (matrix[row][column] == matrix[row][column]);
     }
 
+    public boolean[] getRowArray(int row) {
+        return matrix[row];
+    }
+
+    public boolean[] getColumnArray(int column) {
+        boolean[] columnArray = new boolean[this.row];
+        for (int i = 0; i < this.row; i++) {
+            columnArray[i] = matrix[i][column];
+        }
+        return columnArray;
+    }
+
+    public void setRow(int row, boolean[] array) {
+        matrix[row] = array;
+    }
+
+    public void setColumn(int column, boolean[] array) {
+        for (int i = 0; i < this.row; i++) {
+            matrix[i][column] = array[i];
+        }
+    }
+
     public Set<Integer> getRow(int row) {
         Set<Integer> result = new HashSet<Integer>();
         // 将(row, row)元素添加进结果，保证自反性

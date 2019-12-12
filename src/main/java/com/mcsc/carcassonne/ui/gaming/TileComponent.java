@@ -8,7 +8,6 @@ import com.mcsc.carcassonne.event.gaming.MeeplePlaceListener;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.Rectangle2D;
 
 /**
  * @author White Wing
@@ -43,31 +42,33 @@ public class TileComponent extends JLabel {
     }
 
     private int getXOnTile(EdgeDirectionEnum position) {
-        return switch (position) {
-            case E -> 65;
-            case W -> 0;
-            default -> 33;
-        };
+        switch (position) {
+            case E:
+                return 65;
+            case W:
+                return 0;
+            default:
+                return 33;
+        }
     }
 
     private int getYOnTile(EdgeDirectionEnum position) {
-        return switch (position) {
-            case N -> 0;
-            case S -> 65;
-            default -> 33;
-        };
+        switch (position) {
+            case N:
+                return 0;
+            case S:
+                return 65;
+            default:
+                return 33;
+        }
     }
 
     private MeepleInfo getMeepleIcon() {
-        int index = -1;
-        for (int i = 0; i < managedTile.getMeeples().length; i++) {
-            if (managedTile.getMeeples()[i] != null) index = i;
-        }
-        if (index == -1) {
+        Meeple meeple = managedTile.getMeeple();
+        if (meeple != null)
+           return new MeepleInfo(meeple.getBelongTo().getColor(), managedTile.getMeeplePosition());
+        else
             return new MeepleInfo();
-        }
-        Meeple meeple = managedTile.getMeeples()[index];
-        return new MeepleInfo(meeple.getBelongTo().getColor(), EdgeDirectionEnum.valueOf(index));
     }
 
     @Override
@@ -81,7 +82,7 @@ public class TileComponent extends JLabel {
     }
 
     private String getImagePath() {
-        return "/textures/tile/" + managedTile.getExpansion() + "/" + managedTile.getIdentifier() + "/r" + managedTile.getRotation() + ".jpg";
+        return "/textures/tile/" + managedTile.getExpansion() + "/" + managedTile.getIdentifier() + "/r" + managedTile.getRotation() % 8 / 2 + ".jpg";
     }
 
     /**
