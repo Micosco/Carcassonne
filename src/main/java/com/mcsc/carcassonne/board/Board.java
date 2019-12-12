@@ -96,23 +96,22 @@ public class Board {
 
             Tile lastTile = lastPlaced.getTile();
             if (lastTile.getEdge(EdgeDirectionEnum.valueOf(i)) == EdgeTypeEnum.CITY) {
-                summary(EdgeDirectionEnum.valueOf(i), lastPlaced, effectiveDirection, visited, 2, EdgeTypeEnum.CITY,
-                        score);
+                summary(EdgeDirectionEnum.valueOf(i), lastPlaced, effectiveDirection, visited,
+                        2, EdgeTypeEnum.CITY, score);
             } else if (lastTile.getEdge(EdgeDirectionEnum.valueOf(i)) == EdgeTypeEnum.ROAD) {
-                summary(EdgeDirectionEnum.valueOf(i), lastPlaced, effectiveDirection, visited, 1, EdgeTypeEnum.CITY,
-                        score);
+                summary(EdgeDirectionEnum.valueOf(i), lastPlaced, effectiveDirection, visited,
+                        1, EdgeTypeEnum.ROAD, score);
             }
 
-            if (!score.isNoScore()) {
+            if (!score.isNoScore() && score.getScore() > 0) {
                 for (var player : score.getMeeplesCount().keySet()) {
                     scores.put(player,
                             score.getScore() * score.getMeeplesCount().get(player)
                                     + scores.getOrDefault(player, 0));
                 }
-                if (score.getScore() > 0) {
-                    for (var pos : visited) {
-                        pos.getTile().clearMeeple();
-                    }
+
+                for (var pos : visited) {
+                    pos.getTile().clearMeeple();
                 }
             }
         }
@@ -160,17 +159,21 @@ public class Board {
             result.setNoScore(true);
             return;
         }
+        if (visitedPositions.contains(startPosition)) {
+            return;
+        }
 
         //当前板块分数结算
         visitedPositions.add(startPosition);
         result.addScore(weight);
 
+        var adjacentTiles = startPosition.getAdjacentTiles(startEdge);
+
         //当前板块米宝统计
         Meeple meeple = startPosition.getTile().getMeeple();
-        if (meeple != null)
+        if (meeple != null && adjacentTiles.containsKey(startPosition.getTile().getMeeplePosition()))
             result.addMeepleCount(meeple.getBelongTo());
 
-        var adjacentTiles = startPosition.getAdjacentTiles(startEdge);
 
         //获取需要访问的方向
         Set<EdgeDirectionEnum> needVisit =
@@ -180,7 +183,8 @@ public class Board {
 
         //DFS遍历
         for (var direct : needVisit) {
-            summary(direct, adjacentTiles.get(direct), effectiveDirection, visitedPositions, weight, type, result);
+            summary(direct.getOpposite(), adjacentTiles.get(direct), effectiveDirection, visitedPositions, weight,
+                    type, result);
         }
     }
 

@@ -22,14 +22,14 @@ public class ScoreInfo {
     }
 
     public void addScore(int score) {
-        score += score;
+        this.score += score;
     }
 
     /**
      * 将该次结算标记为无分数
      */
     public void setNoScore(boolean flag) {
-        this.noScore = false;
+        this.noScore = flag;
     }
 
     public boolean isNoScore() {

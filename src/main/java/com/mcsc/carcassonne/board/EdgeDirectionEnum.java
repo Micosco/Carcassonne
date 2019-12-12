@@ -23,6 +23,10 @@ public enum EdgeDirectionEnum {
     EdgeDirectionEnum(int i) {
     }
 
+    public EdgeDirectionEnum getOpposite() {
+        return valueOf((ordinal() + 4) % 8);
+    }
+
     public static EdgeDirectionEnum valueOf(int direction) {
         switch (direction) {
             case 0:

@@ -43,25 +43,45 @@ public class AdjacencyMatrix {
         return isSquare && (matrix[row][column] == matrix[row][column]);
     }
 
+    /**
+     * 获取矩阵中某一行从{@code start} 开始的 {@code length}个元素
+     *
+     * @param row    要获取元素的行
+     * @param start  开始位置
+     * @param length 元素个数
+     * @return 包含{@code length}个元素的数组
+     */
+    public boolean[] getRowArray(int row, int start, int length) {
+        boolean[] array = new boolean[length];
+        System.arraycopy(matrix[row], start, array, 0, length);
+        return array;
+    }
+
     public boolean[] getRowArray(int row) {
-        return matrix[row];
+        return getRowArray(row, 0, this.column);
+    }
+
+    public boolean[] getColumnArray(int column, int start, int length) {
+        boolean[] array = new boolean[length];
+        for (int i = 0; i < length; i++) {
+            array[i] = matrix[start + i][column];
+        }
+        return array;
     }
 
     public boolean[] getColumnArray(int column) {
-        boolean[] columnArray = new boolean[this.row];
-        for (int i = 0; i < this.row; i++) {
-            columnArray[i] = matrix[i][column];
-        }
-        return columnArray;
+        return getRowArray(column, 0, this.row);
     }
 
     public void setRow(int row, boolean[] array) {
-        matrix[row] = array;
+        if (Math.min(array.length, this.column) >= 0)
+            System.arraycopy(array, 0, matrix[row], 0, Math.min(array.length, this.column));
     }
 
     public void setColumn(int column, boolean[] array) {
-        for (int i = 0; i < this.row; i++) {
-            matrix[i][column] = array[i];
+        for (int i = 0; i < Math.min(array.length, this.row); i++) {
+            boolean b = array[i];
+            matrix[i][column] = b;
         }
     }
 
@@ -92,9 +112,17 @@ public class AdjacencyMatrix {
         return matrix[row][column];
     }
 
+    public AdjacencyMatrix copy() {
+        AdjacencyMatrix clone = new AdjacencyMatrix(row, column);
+        for (int i = 0; i < matrix.length; i++) {
+            System.arraycopy(matrix[i], 0, clone.matrix[i], 0, matrix[i].length);
+        }
+        return clone;
+    }
+
     @Override
     public String toString() {
-        return "AdjacencyMatrix{" +
-                "matrix=" + Arrays.deepToString(matrix);
+        return "AdjacencyMatrix{" + "matrix=\n"
+                + Arrays.deepToString(matrix);
     }
 }

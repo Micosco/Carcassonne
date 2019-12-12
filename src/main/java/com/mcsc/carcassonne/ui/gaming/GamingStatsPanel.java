@@ -1,6 +1,7 @@
 package com.mcsc.carcassonne.ui.gaming;
 
 import com.mcsc.carcassonne.game.GameState;
+import com.mcsc.carcassonne.game.RoundStage;
 import com.mcsc.carcassonne.game.RoundStagePointer;
 import net.miginfocom.swing.MigLayout;
 
@@ -29,8 +30,10 @@ public class GamingStatsPanel extends JPanel {
 
         JButton comp = new JButton("跳过放置米宝");
         comp.addActionListener(e -> {
-            RoundStagePointer.getDefaultStagePointer().nextStage();
-            GameState.getCurrentGameState().startSummaryScore();
+            if (RoundStagePointer.getDefaultStagePointer().getCurrentStage() == RoundStage.PLACE_MEEPLE) {
+                RoundStagePointer.getDefaultStagePointer().nextStage();
+                GameState.getCurrentGameState().startSummaryScore();
+            }
         });
         add(comp, "cell 0 7 3 1");
 

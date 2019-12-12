@@ -2,6 +2,7 @@ package com.mcsc.carcassonne.event.gaming;
 
 import com.mcsc.carcassonne.board.Board;
 import com.mcsc.carcassonne.game.GameState;
+import com.mcsc.carcassonne.game.RoundStagePointer;
 import com.mcsc.carcassonne.ui.MainFrame;
 
 import javax.swing.*;
@@ -15,6 +16,7 @@ public class ReturnListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         int result = JOptionPane.showConfirmDialog(MainFrame.getMainWindow(), CONFIRM_MESSAGE, CONFIRM_TITLE, JOptionPane.YES_NO_OPTION);
+        RoundStagePointer.getDefaultStagePointer().reset();
         if (result == JOptionPane.YES_OPTION) {
             MainFrame.getMainWindow().switchPanel("MainMenu");
         }

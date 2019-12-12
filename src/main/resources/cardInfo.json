@@ -523,9 +523,9 @@
     "quantity":"3",
     "edgeType": {
       "0": "road",
-      "1": "city",
+      "1": "field",
       "2": "city",
-      "3": "city",
+      "3": "field",
       "4": "road",
       "5": "field",
       "6": "field",
@@ -547,7 +547,7 @@
   "test1":{
     "expansion": "test",
     "identifier": "1",
-    "quantity":"3",
+    "quantity":"0",
     "edgeType": {
       "0": "road",
       "1": "field",
@@ -574,7 +574,7 @@
   "test2":{
     "expansion": "test",
     "identifier": "2",
-    "quantity":"3",
+    "quantity":"0",
     "edgeType": {
       "0": "road",
       "1": "field",
@@ -601,7 +601,7 @@
   "test3":{
     "expansion": "test",
     "identifier": "3",
-    "quantity":"3",
+    "quantity":"10",
     "edgeType": {
       "0": "city",
       "1": "field",
@@ -626,9 +626,9 @@
   ,"isChurch":false
   },
   "test4":{
-    "expansion": "base",
+    "expansion": "test",
     "identifier": "4",
-    "quantity":"3",
+    "quantity":"0",
     "edgeType": {
       "0": "field",
       "1": "field",
